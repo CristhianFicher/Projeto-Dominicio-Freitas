@@ -48,7 +48,7 @@ const Login = ({ onLogin, onClose, lockScreen = false }) => {
   };
 
   return (
-    <div className="login-overlay">
+    <div className={`login-overlay ${lockScreen ? 'locked' : ''}`}>
       <div className="login-container">
         <div className="login-header">
           <h2>Acesso restrito</h2>
