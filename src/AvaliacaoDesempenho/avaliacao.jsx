@@ -9,7 +9,7 @@ export default function Avaliacao() {
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const { obterEstudantePorId } = useEstudantes();
-  const { adicionarAvaliacao, obterAvaliacaoPorEstudanteETipo } = useAvaliacoes();
+  const { obterAvaliacaoPorEstudanteETipo } = useAvaliacoes();
   const estudanteId = searchParams.get('estudante');
   const tipoFromUrl = searchParams.get('tipo');
   const estudante = estudanteId ? obterEstudantePorId(parseInt(estudanteId)) : null;
@@ -23,7 +23,7 @@ export default function Avaliacao() {
   const [observacoes, setObservacoes] = useState(avaliacaoExistente?.observacoes || '');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
-  const [isReadOnly, setIsReadOnly] = useState(!!avaliacaoExistente);
+  const [isReadOnly] = useState(!!avaliacaoExistente);
   const perguntas = [
     "Atende as regras?",
     "Socializa com o grupo?",
@@ -95,7 +95,7 @@ export default function Avaliacao() {
       setTimeout(() => {
         window.location.href = '/avaliacoes';
       }, 2000);
-    } catch (error) {
+    } catch {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
