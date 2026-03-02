@@ -83,7 +83,7 @@ const Login = ({ onLogin, onClose }) => {
           setMessage('');
         }, 3000);
       }
-    } catch (err) {
+    } catch {
       setError('Erro ao processar sua solicitação. Tente novamente.');
     } finally {
       setIsLoading(false);

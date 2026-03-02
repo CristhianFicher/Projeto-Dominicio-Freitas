@@ -1,0 +1,65 @@
+.relacionamentos-overview {
+  margin-top: 2rem;
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-md);
+}
+
+.relacionamentos-overview h2 {
+  margin-bottom: 0.4rem;
+}
+
+.relacionamentos-overview p {
+  color: var(--text-light);
+}
+
+.entidades-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.entidade-card {
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+  padding: 1rem;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(30, 64, 175, 0.02));
+}
+
+.entidade-card h3 {
+  margin-bottom: 0.5rem;
+}
+
+.entidade-card p {
+  font-size: 0.9rem;
+  margin-bottom: 0.6rem;
+}
+
+.entidade-card ul {
+  padding-left: 1rem;
+  margin: 0;
+}
+
+.entidade-card li {
+  font-size: 0.85rem;
+  margin-bottom: 0.2rem;
+}
+
+.relacoes-box {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  background: rgba(16, 185, 129, 0.05);
+}
+
+.relacoes-box h3 {
+  margin-bottom: 0.5rem;
+}
+
+.relacoes-box ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
