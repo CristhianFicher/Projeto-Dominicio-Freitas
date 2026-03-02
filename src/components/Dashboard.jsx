@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import './Dashboard.css';
+import RelacionamentosOverview from './RelacionamentosOverview';
 const Dashboard = () => {
   const stats = [
     {
@@ -150,6 +151,7 @@ const Dashboard = () => {
           </div>
         ))}
       </div>
+      <RelacionamentosOverview />
       <div className="dashboard-content">
         {/* Quick Actions */}
         <div className="dashboard-section">

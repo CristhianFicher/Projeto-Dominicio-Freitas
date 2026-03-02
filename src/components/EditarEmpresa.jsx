@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useEmpresas } from '../context/EmpresasContext';
 import '../CadastroEmpresas/cadastroEmpresas.css';
 const EditarEmpresa = () => {
-  const { empresas, editarEmpresa, obterEmpresaPorId } = useEmpresas();
+  const { editarEmpresa, obterEmpresaPorId } = useEmpresas();
   const navigate = useNavigate();
   const { id } = useParams();
   const [formData, setFormData] = useState({
@@ -58,7 +58,7 @@ const EditarEmpresa = () => {
       setTimeout(() => {
         navigate('/empresas');
       }, 2000);
-    } catch (error) {
+    } catch {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);

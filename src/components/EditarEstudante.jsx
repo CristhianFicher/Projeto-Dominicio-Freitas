@@ -51,7 +51,7 @@ const EditarEstudante = () => {
       setTimeout(() => {
         navigate('/cadastroAlunos');
       }, 2000);
-    } catch (error) {
+    } catch {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
