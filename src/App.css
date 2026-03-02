@@ -92,6 +92,27 @@
   --font-size-4xl: 2.25rem;
   --font-size-5xl: 3rem;
   
+
+  /* Aliases de variáveis legadas (compatibilidade de estilos antigos) */
+  --primary-color: var(--primary);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-light: var(--info-light);
+  --text-color: var(--text);
+  --text-secondary: var(--text-light);
+  --bg-primary: var(--background);
+  --bg-secondary: var(--card-bg);
+  --bg-tertiary: var(--surface);
+  --input-bg: var(--card-bg);
+  --border-color: var(--border);
+  --border-primary: var(--border);
+  --success-color: var(--success);
+  --warning-color: var(--warning);
+  --danger-color: var(--danger);
+  --success-bg: var(--success-light);
+  --warning-bg: var(--warning-light);
+  --overlay-color: rgba(15, 23, 42, 0.45);
+
   /* Z-index */
   --z-dropdown: 1000;
   --z-sticky: 1020;
@@ -123,6 +144,27 @@
   --border-light: #334155;
   --border-hover: #64748b;
   
+
+  /* Aliases legados no modo escuro */
+  --primary-color: var(--primary-light);
+  --color-primary: var(--primary-light);
+  --color-primary-hover: var(--primary);
+  --color-primary-light: rgba(59, 130, 246, 0.2);
+  --text-color: var(--text);
+  --text-secondary: var(--text-light);
+  --bg-primary: var(--background);
+  --bg-secondary: var(--card-bg);
+  --bg-tertiary: var(--surface);
+  --input-bg: var(--surface);
+  --border-color: var(--border);
+  --border-primary: var(--border);
+  --success-color: #34d399;
+  --warning-color: #fbbf24;
+  --danger-color: #f87171;
+  --success-bg: rgba(52, 211, 153, 0.12);
+  --warning-bg: rgba(251, 191, 36, 0.12);
+  --overlay-color: rgba(2, 6, 23, 0.7);
+
   /* Sombras ajustadas para modo escuro */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
