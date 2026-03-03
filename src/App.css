@@ -1,6 +1,6 @@
-/* ==============================
-   ESUCRI - Portal de Inclusão
-   Design Moderno e Acessível
+﻿/* ==============================
+   ESUCRI - Portal de InclusÃ£o
+   Design Moderno e AcessÃ­vel
 ================================*/
 
 * {
@@ -67,12 +67,12 @@
   --radius-2xl: 24px;
   --radius-full: 50%;
   
-  /* Transições */
+  /* TransiÃ§Ãµes */
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-fast: all 0.2s ease;
   --transition-slow: all 0.5s ease;
   
-  /* Espaçamentos */
+  /* EspaÃ§amentos */
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;
   --space-md: 1rem;
@@ -93,7 +93,7 @@
   --font-size-5xl: 3rem;
   
 
-  /* Aliases de variáveis legadas (compatibilidade de estilos antigos) */
+  /* Aliases de variÃ¡veis legadas (compatibilidade de estilos antigos) */
   --primary-color: var(--primary);
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
@@ -112,6 +112,12 @@
   --success-bg: var(--success-light);
   --warning-bg: var(--warning-light);
   --overlay-color: rgba(15, 23, 42, 0.45);
+  --bg-card: var(--card-bg);
+  --bg-color: var(--background);
+  --text-primary: var(--text);
+  --text-white: #ffffff;
+  --danger-bg: var(--danger-light);
+  --transition-normal: 0.25s ease;
 
   /* Z-index */
   --z-dropdown: 1000;
@@ -699,4 +705,6 @@ body {
     padding: 1.5rem;
   }
 }
+
+
 

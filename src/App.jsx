@@ -19,6 +19,7 @@ import CadastroEmpresas from './CadastroEmpresas/cadastroEmpresas';
 import AvaliacaoExperiencia from './AvaliacaoDesempenho/avaliacao';
 import CadastroFuncionario from './CadastroFuncionario/cadastroFuncionarios';
 import ExemploIntegracao from './components/ExemploIntegracao';
+import RelacionarEstudanteEmpresa from './components/RelacionarEstudanteEmpresa';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -56,6 +57,7 @@ function App() {
                       <Route path="/novo-funcionario" element={<CadastroFuncionario />} />
                       <Route path="/editar-funcionario/:id" element={<EditarFuncionario />} />
                       <Route path="/avaliacao" element={<AvaliacaoExperiencia />} />
+                      <Route path="/relacionamentos" element={<RelacionarEstudanteEmpresa />} />
                       <Route path="/exemplo-integracao" element={<ExemploIntegracao />} />
                       <Route path="/cadastroFuncionarios" element={<CadastroFuncionario />} />
                     </Routes>

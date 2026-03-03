@@ -1,0 +1,134 @@
+﻿.relacao-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.relacao-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+  padding: 1.25rem;
+}
+
+.relacao-card h1,
+.relacao-card h2 {
+  margin: 0 0 0.5rem 0;
+  color: var(--text);
+}
+
+.relacao-card p {
+  margin: 0;
+  color: var(--text-light);
+}
+
+.relacao-form {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 0.85rem;
+}
+
+.relacao-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.relacao-form select,
+.relacao-form textarea {
+  border: 1px solid var(--border);
+  background: var(--bg-secondary);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 0.65rem 0.7rem;
+  font-size: 0.95rem;
+}
+
+.relacao-form select:focus,
+.relacao-form textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--info-light);
+}
+
+.full-row {
+  grid-column: 1 / -1;
+}
+
+.btn-vincular {
+  width: fit-content;
+  padding: 0.7rem 1rem;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.relacao-feedback {
+  margin-top: 0.85rem;
+  border-radius: 10px;
+  background: var(--info-light);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  color: var(--text);
+  padding: 0.7rem;
+}
+
+.relacao-lista {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.relacao-item {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  background: var(--bg-secondary);
+}
+
+.relacao-item h3 {
+  margin: 0 0 0.3rem 0;
+  color: var(--text);
+}
+
+.relacao-item p {
+  margin: 0.1rem 0;
+  color: var(--text-light);
+}
+
+.btn-remover-relacao {
+  border: none;
+  background: var(--danger-color);
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 0.5rem 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-remover-relacao:hover {
+  background: var(--danger-hover);
+}
+
+@media (max-width: 780px) {
+  .relacao-form {
+    grid-template-columns: 1fr;
+  }
+
+  .relacao-item {
+    flex-direction: column;
+  }
+}
