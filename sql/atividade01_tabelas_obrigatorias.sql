@@ -6,13 +6,6 @@
 
 BEGIN;
 
--- Remoção em ordem de dependência (caso já existam)
-DROP TABLE IF EXISTS encaminhamentos CASCADE;
-DROP TABLE IF EXISTS fichas_acompanhamento CASCADE;
-DROP TABLE IF EXISTS avaliacoes CASCADE;
-DROP TABLE IF EXISTS empresas CASCADE;
-DROP TABLE IF EXISTS pessoas CASCADE;
-DROP TABLE IF EXISTS usuarios CASCADE;
 
 -- 1) usuarios: controle de acesso e recuperação de senha
 CREATE TABLE usuarios (
