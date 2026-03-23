@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import './Login.css';
 
 const DEFAULT_USER = 'admin';
@@ -33,6 +33,17 @@ const Login = ({ onLogin, onClose, lockScreen = false }) => {
       setError('Login ou senha inválidos. Use admin / admin.');
       setIsLoading(false);
       return;
+    }
+
+    onLogin({
+      name: 'Administrador',
+      email: 'admin@local',
+      username: DEFAULT_USER,
+    });
+
+    setIsLoading(false);
+    if (!lockScreen && onClose) {
+      onClose();
     }
 
     onLogin({
