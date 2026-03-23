@@ -25,21 +25,7 @@
       "cpf": "22222222222"
     }
   ],
-  "empresas": [
-    {
-      "id": "a7f3",
-      "razaoSocial": "Angeloni",
-      "nomeFantasia": "Mercado Catarinense",
-      "cnpj": "215151515151515151",
-      "ie": "TESTE",
-      "endereco": "Centro",
-      "numeroContatoRh": "4199999999",
-      "renda": 8000000,
-      "areaAtuacao": "Merdcado",
-      "porte": "grande",
-      "observacoes": ""
-    }
-  ],
+  "empresas": [],
   "funcionarios": [
     {
       "id": "dffa",
@@ -58,5 +44,6 @@
       "observacoes": ""
     }
   ],
-  "avaliacoes": []
+  "avaliacoes": [],
+  "relacionamentos": []
 }
