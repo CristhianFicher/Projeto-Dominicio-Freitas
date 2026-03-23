@@ -1,16 +1,10 @@
-/* ==============================
-   Theme Toggle Styles - Tema Azul
-================================*/
-
-.theme-toggle {
+﻿.theme-toggle {
   background: none;
   border: none;
   cursor: pointer;
   padding: 0.75rem;
   border-radius: 16px;
   transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
 }
 
 .theme-toggle:hover {
@@ -39,7 +33,7 @@
 .toggle-thumb {
   width: 24px;
   height: 24px;
-  background: white;
+  background: #ffffff;
   border-radius: 50%;
   position: absolute;
   top: 50%;
@@ -67,141 +61,17 @@
   color: var(--primary-light);
 }
 
-/* ==============================
-   Tema Escuro Global
-================================*/
-.dark-theme {
-  /* Cores de fundo - Modo Escuro */
-  --background: #0f172a;
-  --background-secondary: #1e293b;
-  --card-bg: #1e293b;
-  --surface: #334155;
-  --surface-hover: #475569;
-  
-  /* Cores de texto - Modo Escuro */
-  --text: #f1f5f9;
-  --text-light: #cbd5e1;
-  --text-muted: #94a3b8;
-  --text-inverse: #ffffff;
-  
-  /* Bordas */
-  --border: #475569;
-  --border-light: #334155;
-  --border-hover: #64748b;
-  
-  /* Sombras ajustadas para modo escuro */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
-  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-}
-
-/* Regras específicas do tema escuro usando variáveis CSS */
-.dark-theme .header {
-  background: var(--card-bg);
-  border-bottom-color: var(--border);
-}
-
-.dark-theme .header-nav {
-  background: var(--card-bg);
-}
-
-.dark-theme .mobile-nav {
-  background: var(--card-bg);
-  border-top-color: var(--border);
-}
-
-.dark-theme .mobile-user-section {
-  border-top-color: var(--border);
-}
-
-.dark-theme .login-container {
-  background: var(--card-bg);
-  border-color: var(--border);
-}
-
-.dark-theme .input-wrapper input {
-  background: var(--surface);
-  border-color: var(--border);
-  color: var(--text);
-}
-
-.dark-theme .input-wrapper input:focus {
-  background: var(--surface);
-}
-
-.dark-theme .login-footer {
-  border-top-color: var(--border);
-}
-
-.dark-theme .stat-card {
-  background: var(--card-bg);
-  border-color: var(--border);
-}
-
-.dark-theme .dashboard-section {
-  background: var(--card-bg);
-  border-color: var(--border);
-}
-
-.dark-theme .dashboard-section h2 {
-  border-bottom-color: var(--border);
-}
-
-.dark-theme .activity-item {
-  background: var(--surface);
-}
-
-.dark-theme .activity-item:hover {
-  background: var(--surface-hover);
-}
-
-.dark-theme .resource-card {
-  background: var(--surface);
-}
-
-.dark-theme .cadastro-container {
-  background: var(--card-bg);
-  border-color: var(--border);
-}
-
-.dark-theme .form-group input,
-.dark-theme .form-group select,
-.dark-theme .form-group textarea {
-  background: var(--surface);
-  border-color: var(--border);
-  color: var(--text);
-}
-
-.dark-theme .form-group input:focus,
-.dark-theme .form-group select:focus,
-.dark-theme .form-group textarea:focus {
-  background: var(--surface);
-}
-
-.dark-theme .form-section h3 {
-  border-bottom-color: var(--border);
-}
-
-.dark-theme .checkmark {
-  border-color: var(--border);
-}
-
-/* ==============================
-   Responsividade
-================================*/
 @media (max-width: 480px) {
   .toggle-track {
     width: 50px;
     height: 26px;
   }
-  
+
   .toggle-thumb {
     width: 22px;
     height: 22px;
   }
-  
+
   .theme-toggle.dark .toggle-thumb {
     left: calc(100% - 24px);
   }
