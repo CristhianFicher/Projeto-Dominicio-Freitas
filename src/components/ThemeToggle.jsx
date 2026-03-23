@@ -1,16 +1,9 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import './ThemeToggle.css';
+
 const ThemeToggle = () => {
-  const [isDark, setIsDark] = useState(false);
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (savedTheme) {
-      setIsDark(savedTheme === 'dark');
-    } else {
-      setIsDark(prefersDark);
-    }
-  }, []);
+  const [isDark, setIsDark] = useState(() => localStorage.getItem('theme') === 'dark');
+
   useEffect(() => {
     if (isDark) {
       document.documentElement.classList.add('dark-theme');
@@ -20,13 +13,11 @@ const ThemeToggle = () => {
       localStorage.setItem('theme', 'light');
     }
   }, [isDark]);
-  const toggleTheme = () => {
-    setIsDark(!isDark);
-  };
+
   return (
-    <button 
+    <button
       className={`theme-toggle ${isDark ? 'dark' : 'light'}`}
-      onClick={toggleTheme}
+      onClick={() => setIsDark((current) => !current)}
       aria-label={`Mudar para tema ${isDark ? 'claro' : 'escuro'}`}
     >
       <div className="toggle-track">
@@ -53,4 +44,5 @@ const ThemeToggle = () => {
     </button>
   );
 };
+
 export default ThemeToggle;
