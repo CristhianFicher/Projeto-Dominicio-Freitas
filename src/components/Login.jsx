@@ -55,6 +55,17 @@ const Login = ({ onLogin, onClose, lockScreen = false }) => {
     setIsLoading(false);
     if (!lockScreen && onClose) {
       onClose();
+    }
+
+    onLogin({
+      name: 'Administrador',
+      email: 'admin@local',
+      username: DEFAULT_USER,
+    });
+
+    setIsLoading(false);
+    if (!lockScreen && onClose) {
+      onClose();
       setError('Login ou senha invalidos. Use admin/admin.');
       setIsLoading(false);
       return;
