@@ -1,4 +1,4 @@
-/* ==============================
+﻿/* ==============================
    Dashboard Component Styles - Tema Azul
 ================================*/
 
@@ -87,8 +87,30 @@
 }
 
 .stat-icon {
-  font-size: 3rem;
-  opacity: 0.9;
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #ffffff;
+  background: linear-gradient(135deg, #1e40af, #3b82f6);
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-card.green .stat-icon {
+  background: linear-gradient(135deg, #047857, #10b981);
+}
+
+.stat-card.purple .stat-icon {
+  background: linear-gradient(135deg, #6d28d9, #8b5cf6);
+}
+
+.stat-card.orange .stat-icon {
+  background: linear-gradient(135deg, #c2410c, #f97316);
 }
 
 .stat-content {
@@ -242,6 +264,11 @@
   border-color: rgba(234, 88, 12, 0.2);
 }
 
+.quick-action-card.teal {
+  background: linear-gradient(135deg, rgba(15, 118, 110, 0.1), rgba(20, 184, 166, 0.05));
+  border-color: rgba(15, 118, 110, 0.25);
+}
+
 .action-icon {
   font-size: 2.5rem;
   opacity: 0.9;
@@ -389,6 +416,37 @@
   flex-shrink: 0;
 }
 
+/* Hard guard for light mode to avoid dark card leakage from legacy rules */
+html:not(.dark-theme) .stat-card,
+html:not(.dark-theme) .dashboard-section {
+  background: #ffffff !important;
+}
+
+html:not(.dark-theme) .resource-card,
+html:not(.dark-theme) .activity-item {
+  background: #f8fafc !important;
+}
+
+html:not(.dark-theme) .quick-action-card.blue {
+  background: linear-gradient(135deg, rgba(30, 64, 175, 0.1), rgba(59, 130, 246, 0.04)) !important;
+}
+
+html:not(.dark-theme) .quick-action-card.green {
+  background: linear-gradient(135deg, rgba(5, 150, 105, 0.1), rgba(16, 185, 129, 0.04)) !important;
+}
+
+html:not(.dark-theme) .quick-action-card.purple {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(139, 92, 246, 0.04)) !important;
+}
+
+html:not(.dark-theme) .quick-action-card.orange {
+  background: linear-gradient(135deg, rgba(234, 88, 12, 0.1), rgba(249, 115, 22, 0.04)) !important;
+}
+
+html:not(.dark-theme) .quick-action-card.teal {
+  background: linear-gradient(135deg, rgba(15, 118, 110, 0.1), rgba(20, 184, 166, 0.04)) !important;
+}
+
 /* ==============================
    Responsividade
 ================================*/
@@ -460,29 +518,5 @@
   }
 }
 
-/* ==============================
-   Tema Escuro
-================================*/
-@media (prefers-color-scheme: dark) {
-  .stat-card {
-    background: #1a1a1a;
-    border: 1px solid #333;
-  }
-  
-  .dashboard-section {
-    background: #1a1a1a;
-    border: 1px solid #333;
-  }
-  
-  .dashboard-section h2 {
-    border-bottom-color: #333;
-  }
-  
-  .activity-item {
-    background: #2a2a2a;
-  }
-  
-  .resource-card {
-    background: #2a2a2a;
-  }
-}
+
+

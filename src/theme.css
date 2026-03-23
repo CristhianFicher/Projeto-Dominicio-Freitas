@@ -1,0 +1,143 @@
+﻿:root {
+  --primary: #2563eb;
+  --primary-light: #3b82f6;
+  --primary-hover: #1e40af;
+  --secondary: #06b6d4;
+
+  --background: #f8fafc;
+  --background-secondary: #f1f5f9;
+  --card-bg: #ffffff;
+  --surface: #f8fafc;
+  --surface-hover: #f1f5f9;
+
+  --text: #1e293b;
+  --text-light: #64748b;
+  --text-muted: #94a3b8;
+  --text-inverse: #ffffff;
+
+  --success: #10b981;
+  --success-hover: #059669;
+  --success-light: rgba(16, 185, 129, 0.1);
+  --warning: #f59e0b;
+  --warning-hover: #d97706;
+  --warning-light: rgba(245, 158, 11, 0.1);
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --danger-light: rgba(239, 68, 68, 0.1);
+  --info: #3b82f6;
+  --info-light: rgba(59, 130, 246, 0.1);
+
+  --border: #e2e8f0;
+  --border-light: #f1f5f9;
+  --border-hover: #cbd5e1;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-full: 50%;
+
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.25s ease;
+
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+
+  /* Legacy aliases used across current components */
+  --primary-color: var(--primary);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-light: var(--info-light);
+  --text-color: var(--text);
+  --text-primary: var(--text);
+  --text-secondary: var(--text-light);
+  --text-white: #ffffff;
+  --bg-primary: var(--background);
+  --bg-secondary: var(--card-bg);
+  --bg-tertiary: var(--surface);
+  --bg-card: var(--card-bg);
+  --bg-color: var(--background);
+  --input-bg: var(--card-bg);
+  --border-color: var(--border);
+  --border-primary: var(--border);
+  --success-color: var(--success);
+  --warning-color: var(--warning);
+  --danger-color: var(--danger);
+  --success-bg: var(--success-light);
+  --warning-bg: var(--warning-light);
+  --danger-bg: var(--danger-light);
+  --overlay-color: rgba(15, 23, 42, 0.5);
+}
+
+.dark-theme {
+  --background: #0f172a;
+  --background-secondary: #1e293b;
+  --card-bg: #1e293b;
+  --surface: #334155;
+  --surface-hover: #475569;
+
+  --text: #f1f5f9;
+  --text-light: #cbd5e1;
+  --text-muted: #94a3b8;
+
+  --border: #475569;
+  --border-light: #334155;
+  --border-hover: #64748b;
+
+  --success-color: #34d399;
+  --warning-color: #fbbf24;
+  --danger-color: #f87171;
+  --success-bg: rgba(52, 211, 153, 0.12);
+  --warning-bg: rgba(251, 191, 36, 0.12);
+  --overlay-color: rgba(2, 6, 23, 0.75);
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--background);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: var(--transition);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+}
