@@ -59,6 +59,10 @@
 
 .logo-icon::before {
   content: 'IDF';
+}
+
+.logo-icon::before {
+  content: 'IDF';
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.04em;

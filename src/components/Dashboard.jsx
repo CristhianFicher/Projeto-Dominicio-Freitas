@@ -7,7 +7,7 @@ import { fetchFuncionarios } from '../redux/slices/funcionariosSlice';
 import { fetchAvaliacoes } from '../redux/slices/avaliacoesSlice';
 import RelacionamentosOverview from './RelacionamentosOverview';
 import './Dashboard.css';
-import RelacionamentosOverview from './RelacionamentosOverview';
+import './RelacionamentosOverview.css';
 const Dashboard = () => {
   const dispatch = useDispatch();
 
@@ -94,7 +94,21 @@ const Dashboard = () => {
           </div>
         ))}
       </div>
-      <RelacionamentosOverview />
+      <section className="relacionamentos-overview">
+        <header>
+          <h2>🧩 Visão geral dos relacionamentos</h2>
+          <p>Estrutura de dados referência para preparar o front-end para integração com backend.</p>
+        </header>
+        <div className="relacoes-box">
+          <h3>Relacionamentos principais</h3>
+          <ul>
+            <li>Uma Pessoa pode ter várias Avaliações.</li>
+            <li>Uma Pessoa pode ter várias Fichas de Acompanhamento.</li>
+            <li>Uma Empresa pode receber várias Fichas e Encaminhamentos.</li>
+            <li>Uma Pessoa pode participar de vários Encaminhamentos.</li>
+          </ul>
+        </div>
+      </section>
       <div className="dashboard-content">
         <div className="dashboard-section">
           <h2>Acoes rapidas</h2>
