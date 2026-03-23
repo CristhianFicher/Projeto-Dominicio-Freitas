@@ -41,7 +41,7 @@ export default function CadastroEmpresas() {
       setTimeout(() => {
         navigate('/empresas');
       }, 2000);
-    } catch (error) {
+    } catch {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
