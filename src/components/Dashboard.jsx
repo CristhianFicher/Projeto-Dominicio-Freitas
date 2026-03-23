@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import './Dashboard.css';
+import './RelacionamentosOverview.css';
 const Dashboard = () => {
   const stats = [
     {
@@ -150,6 +151,21 @@ const Dashboard = () => {
           </div>
         ))}
       </div>
+      <section className="relacionamentos-overview">
+        <header>
+          <h2>🧩 Visão geral dos relacionamentos</h2>
+          <p>Estrutura de dados referência para preparar o front-end para integração com backend.</p>
+        </header>
+        <div className="relacoes-box">
+          <h3>Relacionamentos principais</h3>
+          <ul>
+            <li>Uma Pessoa pode ter várias Avaliações.</li>
+            <li>Uma Pessoa pode ter várias Fichas de Acompanhamento.</li>
+            <li>Uma Empresa pode receber várias Fichas e Encaminhamentos.</li>
+            <li>Uma Pessoa pode participar de vários Encaminhamentos.</li>
+          </ul>
+        </div>
+      </section>
       <div className="dashboard-content">
         {/* Quick Actions */}
         <div className="dashboard-section">

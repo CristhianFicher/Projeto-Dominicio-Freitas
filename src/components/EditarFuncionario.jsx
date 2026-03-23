@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useFuncionarios } from '../context/FuncionariosContext';
 import '../CadastroFuncionario/cadastroFuncionarios.css';
 const EditarFuncionario = () => {
-  const { funcionarios, editarFuncionario, obterFuncionarioPorId } = useFuncionarios();
+  const { editarFuncionario, obterFuncionarioPorId } = useFuncionarios();
   const navigate = useNavigate();
   const { id } = useParams();
   const [formData, setFormData] = useState({
@@ -64,7 +64,7 @@ const EditarFuncionario = () => {
       setTimeout(() => {
         navigate('/funcionarios');
       }, 2000);
-    } catch (error) {
+    } catch {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
