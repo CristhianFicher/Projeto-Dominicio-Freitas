@@ -37,9 +37,16 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.4px;
   color: #ffffff;
   background: linear-gradient(135deg, var(--primary), var(--primary-light));
   box-shadow: var(--shadow-sm);
+}
+
+.logo-icon::before {
+  content: 'IDF';
 }
 
 .logo-icon::before {

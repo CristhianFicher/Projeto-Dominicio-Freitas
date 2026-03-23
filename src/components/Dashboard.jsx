@@ -7,7 +7,7 @@ import { fetchFuncionarios } from '../redux/slices/funcionariosSlice';
 import { fetchAvaliacoes } from '../redux/slices/avaliacoesSlice';
 import RelacionamentosOverview from './RelacionamentosOverview';
 import './Dashboard.css';
-
+import RelacionamentosOverview from './RelacionamentosOverview';
 const Dashboard = () => {
   const dispatch = useDispatch();
 
@@ -94,9 +94,7 @@ const Dashboard = () => {
           </div>
         ))}
       </div>
-
       <RelacionamentosOverview />
-
       <div className="dashboard-content">
         <div className="dashboard-section">
           <h2>Acoes rapidas</h2>

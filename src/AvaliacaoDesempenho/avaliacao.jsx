@@ -65,7 +65,8 @@ export default function Avaliacao() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-
+  const { obterEstudantePorId } = useEstudantes();
+  const { obterAvaliacaoPorEstudanteETipo } = useAvaliacoes();
   const estudanteId = searchParams.get('estudante');
   const tipoFromUrl = searchParams.get('tipo');
 
@@ -76,46 +77,58 @@ export default function Avaliacao() {
   const [formData, setFormData] = useState({});
   const [observacoes, setObservacoes] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState('idle');
-
-  useEffect(() => {
-    if (estudantesStatus === 'idle') dispatch(fetchEstudantes());
-    if (avaliacoesStatus === 'idle') dispatch(fetchAvaliacoes());
-  }, [dispatch, estudantesStatus, avaliacoesStatus]);
-
-  const estudante = useMemo(() => {
-    if (!estudanteId) return null;
-    return estudantes.find((item) => String(item.id) === String(estudanteId)) || null;
-  }, [estudantes, estudanteId]);
-
-  const avaliacaoExistente = useMemo(() => {
-    if (!estudanteId) return null;
-    return (
-      avaliacoes.find(
-        (item) => String(item.estudanteId) === String(estudanteId) && String(item.tipoAvaliacao) === String(tipoAvaliacao)
-      ) || null
-    );
-  }, [avaliacoes, estudanteId, tipoAvaliacao]);
-
-  const isReadOnly = Boolean(avaliacaoExistente);
-
-  useEffect(() => {
-    if (avaliacaoExistente) {
-      setFormData(avaliacaoExistente.respostas || {});
-      setObservacoes(avaliacaoExistente.observacoes || '');
-      return;
-    }
-
-    setFormData({});
-    setObservacoes('');
-  }, [avaliacaoExistente]);
-
-  const respostasCompletas = PERGUNTAS.every((_, index) => formData[`pergunta_${index}`]);
-
-  const handleOptionChange = (perguntaIndex, value) => {
-    if (isReadOnly) return;
-
-    setFormData((prev) => ({
+  const [submitStatus, setSubmitStatus] = useState(null);
+  const [isReadOnly] = useState(!!avaliacaoExistente);
+  const perguntas = [
+    "Atende as regras?",
+    "Socializa com o grupo?",
+    "Isola-se do grupo?",
+    "Possui tolerância a frustração?",
+    "Respeita colega e professores?",
+    "Faz relatos fantasiosos?",
+    "Concentra-se nas atividades?",
+    "Tem iniciativa?",
+    "Sonolência durante as atividades em sala de aula?",
+    "Alterações intensas de humor?",
+    "Indica oscilação repentina de humor?",
+    "Irrita-se com facilidade?",
+    "Ansiedade?",
+    "Escuta quando seus colegas falam?",
+    "Escuta e segue orientação dos professores?",
+    "Mantém-se em sala de aula?",
+    "Desloca-se muito na sala?",
+    "Fala demasiadamente?",
+    "É pontual?",
+    "É assíduo?",
+    "Demonstra desejo de trabalhar?",
+    "Apropria-se indevidamente daquilo que não é seu?",
+    "Indica hábito de banho diário?",
+    "Indica hábito de escovação e qualidade na escovação?",
+    "Indica cuidado com a aparência e limpeza do uniforme?",
+    "Indica autonomia quanto a estes hábitos?",
+    "Indica falta do uso de medicação com oscilações de comportamento?",
+    "Tem meio articulado de conseguir receitas e aquisições das medicações?",
+    "Traz seus materiais organizados?",
+    "Usa transporte coletivo?",
+    "Tem iniciativa diante das atividades propostas?",
+    "Localiza-se no espaço da Instituição?",
+    "Situa-se nas trocas de sala e atividades?",
+    "Interage par a par?",
+    "Interage em grupo?",
+    "Cria conflitos e intrigas?",
+    "Promove a harmonia?",
+    "Faz intrigas entre colegas x professores?",
+    "Demonstra interesse em participar das atividades extraclasses?",
+    "Existe interação/participação da família em apoio ao usuário na Instituição?",
+    "Existe superproteção por parte da família quanto a autonomia do usuário?",
+    "Usuário traz relatos negativos da família (de forma geral)?",
+    "Usuário traz relatos positivos da família (de forma geral)?",
+    "Existe incentivo quanto a busca de autonomia para o usuário por parte da família?",
+    "Existe incentivo quanto a inserção do usuário no mercado de trabalho por parte da família?",
+    "Traz os documentos enviados pela Instituição assinado?",
+  ];
+  const handleInputChange = (perguntaIndex, value) => {
+    setFormData(prev => ({
       ...prev,
       [`pergunta_${perguntaIndex}`]: value,
     }));
@@ -144,7 +157,9 @@ export default function Avaliacao() {
       ).unwrap();
 
       setSubmitStatus('success');
-      setTimeout(() => navigate('/avaliacoes'), 900);
+      setTimeout(() => {
+        window.location.href = '/avaliacoes';
+      }, 2000);
     } catch {
       setSubmitStatus('error');
     } finally {

@@ -2,7 +2,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
 import './Header.css';
-
 const Header = ({ user, onLogout }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
@@ -49,7 +48,9 @@ const Header = ({ user, onLogout }) => {
           <ThemeToggle />
           <div className="user-menu">
             <div className="user-info">
-              <div className="user-avatar">{user.name?.charAt(0)?.toUpperCase() || 'U'}</div>
+              <div className="user-avatar">
+                {user.name?.charAt(0)?.toUpperCase() || 'U'}
+              </div>
               <div className="user-details">
                 <span className="user-name">{user.name}</span>
                 <span className="user-email">{user.email}</span>
