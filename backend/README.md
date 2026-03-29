@@ -1,51 +1,58 @@
-RedCar Backend (NestJS + TypeORM + Postgres)
+ONG Backend (NestJS + TypeORM + PostgreSQL)
 
 Overview
-- NestJS API for the RedCar app with 5 CRUDs (parts, revisions, team, clients, suppliers) and a dashboard summary endpoint.
-- TypeORM with migrations and seed data.
-- Validation via class-validator and business-rule error codes returned as HttpExceptions.
+- API NestJS alinhada ao front atual.
+- CRUDs completos para:
+  - estudantes
+  - empresas
+  - funcionarios
+  - avaliacoes
+  - relacionamentos
+- Banco PostgreSQL com migration inicial + seed.
 
 Requirements
 - Node 18+
-- Docker (optional, for Postgres)
+- Docker (opcional, para banco local rapido)
 
 Environment
-- Copy `.env.example` to `.env` and adjust if needed.
-  - `PORT=3001`
-  - `DATABASE_URL=postgres://postgres:postgres@localhost:5432/redcar`
+1. Copie `.env.example` para `.env`
+2. Ajuste se necessario:
+   - `PORT=3001`
+   - `DATABASE_URL=postgres://postgres:postgres@localhost:5433/ong_db`
 
 Run Postgres (Docker)
 ```bash
+cd backend
 docker compose up -d
 ```
 
-Install & Run
+Install
 ```bash
 cd backend
 npm install
+```
+
+Run migrations
+```bash
 npm run typeorm:migration:run
+```
+
+Start API
+```bash
 npm run start:dev
 ```
 
-Endpoints
-- `GET /dashboard` summary: lowStock, stockValue, revision status counts, total clients
-- CRUDs: `/parts`, `/revisions`, `/team`, `/clients`, `/suppliers`
-
-Business Rules (examples)
-- Parts: PART_CODE_ALREADY_EXISTS, NEGATIVE_STOCK_NOT_ALLOWED, UNIT_COST_MUST_BE_POSITIVE, MIN_STOCK_OVER_LIMIT, CANNOT_DELETE_STOCKED_PART, PART_NOT_FOUND
-- Revisions: SCHEDULE_IN_PAST, INVALID_LICENSE_PLATE, FINISH_REQUIRES_NOTES, CANNOT_REOPEN_FINISHED, CANNOT_DELETE_PAST_REVISION, REVISION_NOT_FOUND
-- Team: EMAIL_ALREADY_USED, CERT_EXPIRED, HIRE_DATE_IN_FUTURE, CANNOT_DELETE_ACTIVE_MEMBER, TEAM_MEMBER_NOT_FOUND
-- Clients: EMAIL_ALREADY_USED, LAST_VISIT_IN_FUTURE, INVALID_LICENSE_PLATE, CANNOT_DELETE_ACTIVE_CLIENT, CLIENT_NOT_FOUND
-- Suppliers: EMAIL_ALREADY_USED, INVALID_RATING, LEAD_TIME_TOO_HIGH, SUPPLIER_NOT_FOUND
+Main endpoints
+- `GET/POST/GET:id/PUT:id/DELETE:id /estudantes`
+- `GET/POST/GET:id/PUT:id/DELETE:id /empresas`
+- `GET/POST/GET:id/PUT:id/DELETE:id /funcionarios`
+- `GET/POST/GET:id/PUT:id/DELETE:id /avaliacoes`
+- `GET/POST/GET:id/PUT:id/DELETE:id /relacionamentos`
 
 Migrations
-- `src/migrations/1710000000000-InitSchema.ts`: creates tables
-- `src/migrations/1710000001000-SeedData.ts`: inserts starter data
-
-Postman
-- Import `postman/RedCar.postman_collection.json` and set `{{baseUrl}}` to `http://localhost:3001`.
+- `src/migrations/1760000000000-InitOngSchema.ts`
+- `src/migrations/1760000001000-SeedOngData.ts`
 
 Notes
-- The initial migration enables `pgcrypto` for UUID generation (`gen_random_uuid()`). If your Postgres lacks this, run: `CREATE EXTENSION IF NOT EXISTS pgcrypto;`.
-- CORS and global validation are enabled in `src/main.ts`.
-
+- CORS e ValidationPipe globais estao ativos em `src/main.ts`.
+- O backend usa UUID como chave primaria.

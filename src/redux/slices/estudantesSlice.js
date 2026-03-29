@@ -1,38 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../services/api';
 
-const mapClientToEstudante = (client) => {
-  // Suporte temporário: mantém compatibilidade caso ainda venha payload antigo.
-  if (client.nome) {
-    return client;
-  }
-
-  return {
-    id: client.id,
-    nome: client.name ?? 'Sem nome',
-    email: client.email ?? '',
-    cpf: client.document ?? 'N/D',
-    dataNascimento: client.birthDate ?? '2000-01-01',
-    telefone: client.phone ?? '',
-    endereco: client.address ?? '',
-    nomeResponsavel: client.responsibleName ?? 'Não informado',
-    telefoneResponsavel: client.responsiblePhone ?? '',
-    grauAutismo: client.supportLevel ?? 'não informado',
-    necessidadesEspeciais: client.specialNeeds ?? '',
-    interesses: client.interests ?? '',
-    habilidades: client.skills ?? '',
-    objetivosEducacionais: client.educationalGoals ?? '',
-    objetivosProfissionais: client.professionalGoals ?? '',
-    observacoes: client.notes ?? '',
-  };
-};
-
-// MIGRAÇÃO FASE 1 (GET): estudantes agora vem da API real em /clients.
 export const fetchEstudantes = createAsyncThunk(
   'estudantes/fetchEstudantes',
   async () => {
-    const response = await api.get('/clients');
-    return response.data.map(mapClientToEstudante);
+    const response = await api.get('/estudantes');
+    return response.data;
   }
 );
 

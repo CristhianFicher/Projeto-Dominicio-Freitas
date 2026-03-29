@@ -1,0 +1,46 @@
+{
+  "info": {
+    "name": "ONG API",
+    "_postman_id": "8ef1f6d9-6318-4185-bccc-df0000000001",
+    "description": "Colecao de testes da API da ONG",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Estudantes",
+      "item": [
+        { "name": "Listar", "request": { "method": "GET", "url": "{{baseUrl}}/estudantes" } },
+        { "name": "Criar", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nome\": \"Novo Estudante\",\n  \"cpf\": \"12345678900\",\n  \"dataNascimento\": \"2010-01-01\",\n  \"telefone\": \"48999999999\",\n  \"email\": \"novo@ong.org\",\n  \"endereco\": \"Rua Teste\"\n}" }, "url": "{{baseUrl}}/estudantes" } }
+      ]
+    },
+    {
+      "name": "Empresas",
+      "item": [
+        { "name": "Listar", "request": { "method": "GET", "url": "{{baseUrl}}/empresas" } },
+        { "name": "Criar", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"razaoSocial\": \"Empresa Teste LTDA\",\n  \"nomeFantasia\": \"Empresa Teste\",\n  \"cnpj\": \"12345678000100\",\n  \"ie\": \"123456\",\n  \"endereco\": \"Rua Central\",\n  \"numeroContatoRh\": \"48999990000\",\n  \"renda\": 100000,\n  \"areaAtuacao\": \"Tecnologia\",\n  \"porte\": \"media\"\n}" }, "url": "{{baseUrl}}/empresas" } }
+      ]
+    },
+    {
+      "name": "Funcionarios",
+      "item": [
+        { "name": "Listar", "request": { "method": "GET", "url": "{{baseUrl}}/funcionarios" } },
+        { "name": "Criar", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nome\": \"Funcionario Teste\",\n  \"cpf\": \"12312312312\",\n  \"telefone\": \"48999991111\",\n  \"email\": \"funcionario@ong.org\",\n  \"endereco\": \"Rua X\",\n  \"dataNascimento\": \"1990-01-01\",\n  \"dataAdmissao\": \"2026-01-01\",\n  \"funcao\": \"Apoio\",\n  \"departamento\": \"inclusao\",\n  \"salario\": 3000\n}" }, "url": "{{baseUrl}}/funcionarios" } }
+      ]
+    },
+    {
+      "name": "Avaliacoes",
+      "item": [
+        { "name": "Listar", "request": { "method": "GET", "url": "{{baseUrl}}/avaliacoes" } }
+      ]
+    },
+    {
+      "name": "Relacionamentos",
+      "item": [
+        { "name": "Listar", "request": { "method": "GET", "url": "{{baseUrl}}/relacionamentos" } }
+      ]
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3001" }
+  ]
+}

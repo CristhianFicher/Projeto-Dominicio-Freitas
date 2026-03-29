@@ -5,7 +5,6 @@ Este projeto está sendo desenvolvido por **Cristhian** e **Ghustavo** com foco 
 A proposta é criar uma base sólida de dados e processos para facilitar a rotina da equipe da ONG, melhorar o controle das informações e apoiar decisões com mais clareza.
 
 ---
-
 ## 👥 Equipe do projeto
 
 - **Cristhian**
@@ -85,4 +84,5 @@ Nosso objetivo é entregar um sistema organizado, útil e evolutivo, que ajude a
 - **Atividade 01**
 - **Entrega:** 09/03/2026
 - **Peso:** 3,0 pontos
+
 

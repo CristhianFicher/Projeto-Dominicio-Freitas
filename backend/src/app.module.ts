@@ -1,13 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
-import { PartsModule } from './modules/parts/parts.module';
-import { RevisionsModule } from './modules/revisions/revisions.module';
-import { TeamModule } from './modules/team/team.module';
-import { ClientsModule } from './modules/clients/clients.module';
-import { SuppliersModule } from './modules/suppliers/suppliers.module';
-import { DashboardModule } from './modules/dashboard/dashboard.module';
+import { EstudantesModule } from './modules/estudantes/estudantes.module';
+import { EmpresasModule } from './modules/empresas/empresas.module';
+import { FuncionariosModule } from './modules/funcionarios/funcionarios.module';
+import { AvaliacoesModule } from './modules/avaliacoes/avaliacoes.module';
+import { RelacionamentosModule } from './modules/relacionamentos/relacionamentos.module';
 
 @Module({
   imports: [
@@ -18,13 +16,11 @@ import { DashboardModule } from './modules/dashboard/dashboard.module';
       autoLoadEntities: true,
       synchronize: false,
     }),
-    PartsModule,
-    RevisionsModule,
-    TeamModule,
-    ClientsModule,
-    SuppliersModule,
-    DashboardModule,
+    EstudantesModule,
+    EmpresasModule,
+    FuncionariosModule,
+    AvaliacoesModule,
+    RelacionamentosModule,
   ],
 })
 export class AppModule {}
-

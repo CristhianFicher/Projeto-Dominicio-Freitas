@@ -1,5 +1,5 @@
 {
-  "name": "redcar-backend",
+  "name": "ong-backend",
   "version": "1.0.0",
   "private": true,
   "license": "UNLICENSED",
@@ -31,4 +31,3 @@
     "typescript": "^5.6.3"
   }
 }
-
