@@ -1,58 +1,83 @@
-ONG Backend (NestJS + TypeORM + PostgreSQL)
+# ONG Backend
 
-Overview
-- API NestJS alinhada ao front atual.
-- CRUDs completos para:
-  - estudantes
-  - empresas
-  - funcionarios
-  - avaliacoes
-  - relacionamentos
-- Banco PostgreSQL com migration inicial + seed.
+API NestJS com TypeORM e PostgreSQL para o projeto Diomicio Freitas.
 
-Requirements
+## Funcionalidades
+
+- CRUD de estudantes
+- CRUD de empresas
+- CRUD de funcionarios
+- CRUD de avaliacoes
+- CRUD de relacionamentos
+- migrations iniciais e seed de dados
+- modulo de avaliacoes adaptado para `pessoa_id`, `tipo`, `professor_responsavel` e `q01..q46`
+
+## Requisitos
+
 - Node 18+
-- Docker (opcional, para banco local rapido)
+- Docker Desktop ou PostgreSQL acessivel localmente
 
-Environment
-1. Copie `.env.example` para `.env`
-2. Ajuste se necessario:
-   - `PORT=3001`
-   - `DATABASE_URL=postgres://postgres:postgres@localhost:5433/ong_db`
+## Ambiente
 
-Run Postgres (Docker)
+Copie o arquivo de exemplo:
+
 ```bash
-cd backend
+copy .env.example .env
+```
+
+Valores padrao:
+
+```env
+PORT=3001
+DATABASE_URL=postgres://postgres:postgres@localhost:5433/ong_db
+```
+
+## Subir o banco
+
+```bash
 docker compose up -d
 ```
 
-Install
+## Instalar dependencias
+
 ```bash
-cd backend
 npm install
 ```
 
-Run migrations
+## Rodar migrations
+
 ```bash
 npm run typeorm:migration:run
 ```
 
-Start API
+## Iniciar a API
+
 ```bash
 npm run start:dev
 ```
 
-Main endpoints
-- `GET/POST/GET:id/PUT:id/DELETE:id /estudantes`
-- `GET/POST/GET:id/PUT:id/DELETE:id /empresas`
-- `GET/POST/GET:id/PUT:id/DELETE:id /funcionarios`
-- `GET/POST/GET:id/PUT:id/DELETE:id /avaliacoes`
-- `GET/POST/GET:id/PUT:id/DELETE:id /relacionamentos`
+## Testes e validacao
 
-Migrations
-- `src/migrations/1760000000000-InitOngSchema.ts`
-- `src/migrations/1760000001000-SeedOngData.ts`
+```bash
+npm run build
+npm run test
+```
 
-Notes
-- CORS e ValidationPipe globais estao ativos em `src/main.ts`.
-- O backend usa UUID como chave primaria.
+O script de testes cobre os servicos de estudantes, avaliacoes e relacionamentos sem depender de banco externo.
+
+## Endpoints principais
+
+- `GET/POST/GET:id/PUT:id/DELETE:id /api/estudantes`
+- `GET/POST/GET:id/PUT:id/DELETE:id /api/empresas`
+- `GET/POST/GET:id/PUT:id/DELETE:id /api/funcionarios`
+- `GET/POST/GET:id/PUT:id/DELETE:id /api/avaliacoes`
+- `GET /api/avaliacoes?pessoa_id=<uuid>`
+- `GET/POST/GET:id/PUT:id/DELETE:id /api/relacionamentos`
+
+## Estrutura importante
+
+- `src/main.ts`: bootstrap da API, CORS e `ValidationPipe`
+- `src/app.module.ts`: modulos e conexao principal do TypeORM
+- `src/migrations/1760000000000-InitOngSchema.ts`: schema inicial
+- `src/migrations/1760000001000-SeedOngData.ts`: seed inicial
+- `src/migrations/1760000002000-AdaptAvaliacoesToActivity.ts`: adaptacao do modulo de avaliacoes para a entrega

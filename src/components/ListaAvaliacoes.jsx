@@ -24,11 +24,11 @@ const ListaAvaliacoes = () => {
     (estudante.email || '').toLowerCase().includes(filtro.toLowerCase())
   );
 
-  const getAvaliacao = (estudanteId, tipoAvaliacao) =>
+  const getAvaliacao = (estudanteId, tipo) =>
     avaliacoes.find(
       (item) =>
-        String(item.estudanteId) === String(estudanteId) &&
-        String(item.tipoAvaliacao) === String(tipoAvaliacao)
+        String(item.pessoa_id) === String(estudanteId) &&
+        String(item.tipo) === String(tipo)
     );
 
   const handleAvaliarClick = (estudante, tipoAvaliacao) => {
@@ -79,8 +79,8 @@ const ListaAvaliacoes = () => {
           </div>
         ) : (
           estudantesFiltrados.map((estudante) => {
-            const avaliacao1 = getAvaliacao(estudante.id, 1);
-            const avaliacao2 = getAvaliacao(estudante.id, 2);
+            const avaliacao1 = getAvaliacao(estudante.id, 'inicial');
+            const avaliacao2 = getAvaliacao(estudante.id, 'acompanhamento');
 
             return (
               <div key={estudante.id} className="estudante-card">
@@ -99,7 +99,10 @@ const ListaAvaliacoes = () => {
                     <div className="avaliacao-item">
                       <div className="avaliacao-info">
                         <span className="avaliacao-tipo">Avaliacao 1a experiencia</span>
-                        <span className="avaliacao-data">{formatarData(avaliacao1?.dataAvaliacao)}</span>
+                        <span className="avaliacao-data">{formatarData(avaliacao1?.data_avaliacao)}</span>
+                        {avaliacao1?.professor_responsavel && (
+                          <span className="avaliacao-data">Professor: {avaliacao1.professor_responsavel}</span>
+                        )}
                       </div>
                       <div className="avaliacao-actions">
                         <span className={`status-badge ${avaliacao1 ? 'concluida' : 'pendente'}`}>
@@ -114,7 +117,10 @@ const ListaAvaliacoes = () => {
                     <div className="avaliacao-item">
                       <div className="avaliacao-info">
                         <span className="avaliacao-tipo">Avaliacao 2a experiencia</span>
-                        <span className="avaliacao-data">{formatarData(avaliacao2?.dataAvaliacao)}</span>
+                        <span className="avaliacao-data">{formatarData(avaliacao2?.data_avaliacao)}</span>
+                        {avaliacao2?.professor_responsavel && (
+                          <span className="avaliacao-data">Professor: {avaliacao2.professor_responsavel}</span>
+                        )}
                       </div>
                       <div className="avaliacao-actions">
                         <span className={`status-badge ${avaliacao2 ? 'concluida' : 'pendente'}`}>

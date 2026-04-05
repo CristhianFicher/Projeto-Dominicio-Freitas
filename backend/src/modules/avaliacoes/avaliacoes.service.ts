@@ -10,11 +10,14 @@ export class AvaliacoesService {
     @InjectRepository(Avaliacao) private readonly repo: Repository<Avaliacao>,
   ) {}
 
-  list() {
-    return this.repo.find({ order: { dataAvaliacao: 'DESC', createdAt: 'DESC' } });
+  list(pessoa_id?: string) {
+    return this.repo.find({
+      where: pessoa_id ? { pessoa_id } : undefined,
+      order: { data_avaliacao: 'DESC', created_at: 'DESC' },
+    });
   }
 
-  async get(id: string) {
+  async get(id: number) {
     const avaliacao = await this.repo.findOne({ where: { id } });
     if (!avaliacao) {
       throw new NotFoundException('Avaliacao nao encontrada');
@@ -26,13 +29,13 @@ export class AvaliacoesService {
     return this.repo.save(this.repo.create(dto));
   }
 
-  async update(id: string, dto: UpdateAvaliacaoDto) {
+  async update(id: number, dto: UpdateAvaliacaoDto) {
     const avaliacao = await this.get(id);
     this.repo.merge(avaliacao, dto);
     return this.repo.save(avaliacao);
   }
 
-  async remove(id: string) {
+  async remove(id: number) {
     const avaliacao = await this.get(id);
     await this.repo.remove(avaliacao);
     return { id };

@@ -1,80 +1,122 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import { useEstudantes } from '../context/EstudantesContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchEstudantes, updateEstudante } from '../redux/slices/estudantesSlice';
 import './EditarEstudante.css';
+
+const INITIAL_FORM_DATA = {
+  nome: '',
+  cpf: '',
+  dataNascimento: '',
+  telefone: '',
+  email: '',
+  endereco: '',
+  nomeResponsavel: '',
+  telefoneResponsavel: '',
+  grauAutismo: '',
+  necessidadesEspeciais: '',
+  interesses: '',
+  habilidades: '',
+  objetivosEducacionais: '',
+  objetivosProfissionais: '',
+  observacoes: '',
+};
+
 const EditarEstudante = () => {
-  const { obterEstudantePorId, editarEstudante } = useEstudantes();
+  const dispatch = useDispatch();
+  const { items: estudantes, status } = useSelector((state) => state.estudantes);
   const { id } = useParams();
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    nome: '',
-    cpf: '',
-    dataNascimento: '',
-    telefone: '',
-    email: '',
-    endereco: '',
-    nomeResponsavel: '',
-    telefoneResponsavel: '',
-    grauAutismo: '',
-    necessidadesEspeciais: '',
-    interesses: '',
-    habilidades: '',
-    objetivosEducacionais: '',
-    objetivosProfissionais: '',
-    observacoes: ''
-  });
+  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
+
   useEffect(() => {
-    const estudante = obterEstudantePorId(parseInt(id));
+    if (status === 'idle') {
+      dispatch(fetchEstudantes());
+    }
+  }, [dispatch, status]);
+
+  const estudante = useMemo(
+    () => estudantes.find((item) => String(item.id) === String(id)),
+    [estudantes, id],
+  );
+
+  useEffect(() => {
     if (estudante) {
-      setFormData(estudante);
-    } else {
+      setFormData({
+        ...INITIAL_FORM_DATA,
+        ...estudante,
+      });
+      return;
+    }
+
+    if (status === 'succeeded') {
       navigate('/cadastroAlunos');
     }
-  }, [id, obterEstudantePorId, navigate]);
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
+  }, [estudante, navigate, status]);
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus(null);
+
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      editarEstudante(parseInt(id), formData);
+      await dispatch(updateEstudante({ id, estudante: formData })).unwrap();
       setSubmitStatus('success');
       setTimeout(() => {
         navigate('/cadastroAlunos');
-      }, 2000);
+      }, 1200);
     } catch {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  if ((status === 'idle' || status === 'loading') && !estudante) {
+    return (
+      <div className="editar-page">
+        <div className="editar-container">
+          <div className="editar-header">
+            <div className="header-content">
+              <div>
+                <h1>Editar Estudante</h1>
+                <p>Carregando dados do estudante...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="editar-page">
       <div className="editar-container">
         <div className="editar-header">
           <Link to="/cadastroAlunos" className="back-button">
-            ← Voltar à Lista de Estudantes
+            ← Voltar a Lista de Estudantes
           </Link>
           <div className="header-content">
-            <div className="header-icon">✏️</div>
+            <div className="header-icon">ED</div>
             <div>
               <h1>Editar Estudante</h1>
-              <p>Atualize as informações do estudante</p>
+              <p>Atualize as informacoes do estudante</p>
             </div>
           </div>
         </div>
         <form className="editar-form" onSubmit={handleSubmit}>
           <div className="form-section">
-            <h3>👤 Dados Pessoais</h3>
+            <h3>Dados Pessoais</h3>
             <div className="form-grid">
               <div className="form-group">
                 <label htmlFor="nome">
@@ -146,10 +188,10 @@ const EditarEstudante = () => {
             </div>
           </div>
           <div className="form-section">
-            <h3>🏠 Endereço e Contato</h3>
+            <h3>Endereco e Contato</h3>
             <div className="form-group full-width">
               <label htmlFor="endereco">
-                Endereço Completo *
+                Endereco Completo *
               </label>
               <input
                 type="text"
@@ -158,16 +200,16 @@ const EditarEstudante = () => {
                 value={formData.endereco}
                 onChange={handleInputChange}
                 required
-                placeholder="Rua, número, bairro, cidade, estado"
+                placeholder="Rua, numero, bairro, cidade, estado"
               />
             </div>
           </div>
           <div className="form-section">
-            <h3>👨‍👩‍👧‍👦 Responsável</h3>
+            <h3>Responsavel</h3>
             <div className="form-grid">
               <div className="form-group">
                 <label htmlFor="nomeResponsavel">
-                  Nome do Responsável *
+                  Nome do Responsavel *
                 </label>
                 <input
                   type="text"
@@ -176,12 +218,12 @@ const EditarEstudante = () => {
                   value={formData.nomeResponsavel}
                   onChange={handleInputChange}
                   required
-                  placeholder="Nome completo do responsável"
+                  placeholder="Nome completo do responsavel"
                 />
               </div>
               <div className="form-group">
                 <label htmlFor="telefoneResponsavel">
-                  Telefone do Responsável *
+                  Telefone do Responsavel *
                 </label>
                 <input
                   type="tel"
@@ -196,7 +238,7 @@ const EditarEstudante = () => {
             </div>
           </div>
           <div className="form-section">
-            <h3>🧠 Características do Autismo</h3>
+            <h3>Caracteristicas do Autismo</h3>
             <div className="form-grid">
               <div className="form-group">
                 <label htmlFor="grauAutismo">
@@ -209,9 +251,9 @@ const EditarEstudante = () => {
                   onChange={handleInputChange}
                 >
                   <option value="">Selecione o grau</option>
-                  <option value="leve">Leve (Nível 1)</option>
-                  <option value="moderado">Moderado (Nível 2)</option>
-                  <option value="severa">Severo (Nível 3)</option>
+                  <option value="leve">Leve (Nivel 1)</option>
+                  <option value="moderado">Moderado (Nivel 2)</option>
+                  <option value="severa">Severo (Nivel 3)</option>
                 </select>
               </div>
               <div className="form-group full-width">
@@ -223,18 +265,18 @@ const EditarEstudante = () => {
                   name="necessidadesEspeciais"
                   value={formData.necessidadesEspeciais}
                   onChange={handleInputChange}
-                  placeholder="Descreva as necessidades especiais e adaptações necessárias"
+                  placeholder="Descreva as necessidades especiais e adaptacoes necessarias"
                   rows="3"
                 />
               </div>
             </div>
           </div>
           <div className="form-section">
-            <h3>🎯 Interesses e Habilidades</h3>
+            <h3>Interesses e Habilidades</h3>
             <div className="form-grid">
               <div className="form-group">
                 <label htmlFor="interesses">
-                  Áreas de Interesse
+                  Areas de Interesse
                 </label>
                 <input
                   type="text"
@@ -242,7 +284,7 @@ const EditarEstudante = () => {
                   name="interesses"
                   value={formData.interesses}
                   onChange={handleInputChange}
-                  placeholder="Ex: Tecnologia, Arte, Ciências, etc."
+                  placeholder="Ex: Tecnologia, Arte, Ciencias, etc."
                 />
               </div>
               <div className="form-group">
@@ -255,13 +297,13 @@ const EditarEstudante = () => {
                   name="habilidades"
                   value={formData.habilidades}
                   onChange={handleInputChange}
-                  placeholder="Ex: Memória visual, atenção aos detalhes, etc."
+                  placeholder="Ex: Memoria visual, atencao aos detalhes, etc."
                 />
               </div>
             </div>
           </div>
           <div className="form-section">
-            <h3>🎓 Objetivos Educacionais e Profissionais</h3>
+            <h3>Objetivos Educacionais e Profissionais</h3>
             <div className="form-grid">
               <div className="form-group">
                 <label htmlFor="objetivosEducacionais">
@@ -292,52 +334,36 @@ const EditarEstudante = () => {
             </div>
           </div>
           <div className="form-section">
-            <h3>📝 Observações Adicionais</h3>
+            <h3>Observacoes Adicionais</h3>
             <div className="form-group full-width">
               <label htmlFor="observacoes">
-                Observações Importantes
+                Observacoes Importantes
               </label>
               <textarea
                 id="observacoes"
                 name="observacoes"
                 value={formData.observacoes}
                 onChange={handleInputChange}
-                placeholder="Informações adicionais relevantes sobre o estudante"
+                placeholder="Informacoes adicionais relevantes sobre o estudante"
                 rows="4"
               />
             </div>
           </div>
           {submitStatus && (
             <div className={`submit-status ${submitStatus}`}>
-              {submitStatus === 'success' ? (
-                <>
-                  Estudante atualizado com sucesso! 🎉
-                </>
-              ) : (
-                <>
-                  Erro ao atualizar estudante. Tente novamente.
-                </>
-              )}
+              {submitStatus === 'success' ? 'Estudante atualizado com sucesso.' : 'Erro ao atualizar estudante. Tente novamente.'}
             </div>
           )}
           <div className="form-actions">
             <Link to="/cadastroAlunos" className="btn-cancelar">
               Cancelar
             </Link>
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className={`btn-salvar ${isSubmitting ? 'loading' : ''}`}
               disabled={isSubmitting}
             >
-              {isSubmitting ? (
-                <>
-                  Salvando...
-                </>
-              ) : (
-                <>
-                  Salvar Alterações
-                </>
-              )}
+              {isSubmitting ? 'Salvando...' : 'Salvar Alteracoes'}
             </button>
           </div>
         </form>
@@ -345,4 +371,5 @@ const EditarEstudante = () => {
     </div>
   );
 };
+
 export default EditarEstudante;

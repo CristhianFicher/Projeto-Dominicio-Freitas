@@ -1,91 +1,130 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useEmpresas } from '../context/EmpresasContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchEmpresas, updateEmpresa } from '../redux/slices/empresasSlice';
 import '../CadastroEmpresas/cadastroEmpresas.css';
+
+const INITIAL_FORM_DATA = {
+  razaoSocial: '',
+  nomeFantasia: '',
+  cnpj: '',
+  ie: '',
+  endereco: '',
+  numeroContatoRh: '',
+  renda: '',
+  areaAtuacao: '',
+  porte: '',
+  observacoes: '',
+};
+
 const EditarEmpresa = () => {
-  const { editarEmpresa, obterEmpresaPorId } = useEmpresas();
+  const dispatch = useDispatch();
+  const { items: empresas, status } = useSelector((state) => state.empresas);
   const navigate = useNavigate();
   const { id } = useParams();
-  const [formData, setFormData] = useState({
-    razaoSocial: '',
-    nomeFantasia: '',
-    cnpj: '',
-    ie: '',
-    endereco: '',
-    numeroContatoRh: '',
-    renda: '',
-    areaAtuacao: '',
-    porte: '',
-    observacoes: ''
-  });
+  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
+
   useEffect(() => {
-    const empresa = obterEmpresaPorId(parseInt(id));
+    if (status === 'idle') {
+      dispatch(fetchEmpresas());
+    }
+  }, [dispatch, status]);
+
+  const empresa = useMemo(
+    () => empresas.find((item) => String(item.id) === String(id)),
+    [empresas, id],
+  );
+
+  useEffect(() => {
     if (empresa) {
       setFormData({
-        razaoSocial: empresa.razaoSocial || '',
-        nomeFantasia: empresa.nomeFantasia || '',
-        cnpj: empresa.cnpj || '',
-        ie: empresa.ie || '',
-        endereco: empresa.endereco || '',
-        numeroContatoRh: empresa.numeroContatoRh || '',
-        renda: empresa.renda || '',
-        areaAtuacao: empresa.areaAtuacao || '',
-        porte: empresa.porte || '',
-        observacoes: empresa.observacoes || ''
+        ...INITIAL_FORM_DATA,
+        ...empresa,
       });
+      return;
     }
-  }, [id, obterEmpresaPorId]);
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
+
+    if (status === 'succeeded') {
+      navigate('/empresas');
+    }
+  }, [empresa, navigate, status]);
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus(null);
+
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      editarEmpresa(parseInt(id), {
-        ...formData,
-        renda: parseFloat(formData.renda) || 0
-      });
+      await dispatch(
+        updateEmpresa({
+          id,
+          empresa: {
+            ...formData,
+            renda: parseFloat(formData.renda) || 0,
+          },
+        }),
+      ).unwrap();
+
       setSubmitStatus('success');
       setTimeout(() => {
         navigate('/empresas');
-      }, 2000);
+      }, 1200);
     } catch {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  if ((status === 'idle' || status === 'loading') && !empresa) {
+    return (
+      <div className="cadastro-page">
+        <div className="cadastro-container">
+          <div className="cadastro-header">
+            <div className="header-content">
+              <div>
+                <h1>Editar Empresa</h1>
+                <p>Carregando dados da empresa...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="cadastro-page">
       <div className="cadastro-container">
         <div className="cadastro-header">
           <Link to="/empresas" className="back-button">
-            ← Voltar à Lista de Empresas
+            ← Voltar a Lista de Empresas
           </Link>
           <div className="header-content">
-            <div className="header-icon">🏢</div>
+            <div className="header-icon">EM</div>
             <div>
               <h1>Editar Empresa</h1>
-              <p>Atualize as informações da empresa</p>
+              <p>Atualize as informacoes da empresa</p>
             </div>
           </div>
         </div>
         <form className="cadastro-form" onSubmit={handleSubmit}>
           <div className="form-section">
-            <h3>🏢 Dados da Empresa</h3>
+            <h3>Dados da Empresa</h3>
             <div className="form-grid">
               <div className="form-group">
                 <label htmlFor="razaoSocial">
-                  Razão Social *
+                  Razao Social *
                 </label>
                 <input
                   type="text"
@@ -94,7 +133,7 @@ const EditarEmpresa = () => {
                   value={formData.razaoSocial}
                   onChange={handleInputChange}
                   required
-                  placeholder="Digite a razão social"
+                  placeholder="Digite a razao social"
                 />
               </div>
               <div className="form-group">
@@ -127,7 +166,7 @@ const EditarEmpresa = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="ie">
-                  IE (Inscrição Estadual) *
+                  IE (Inscricao Estadual)
                 </label>
                 <input
                   type="text"
@@ -135,18 +174,17 @@ const EditarEmpresa = () => {
                   name="ie"
                   value={formData.ie}
                   onChange={handleInputChange}
-                  required
-                  placeholder="Digite a inscrição estadual"
+                  placeholder="Digite a inscricao estadual"
                 />
               </div>
             </div>
           </div>
           <div className="form-section">
-            <h3>🏠 Endereço e Contato</h3>
+            <h3>Endereco e Contato</h3>
             <div className="form-grid">
               <div className="form-group full-width">
                 <label htmlFor="endereco">
-                  Endereço Completo *
+                  Endereco Completo *
                 </label>
                 <input
                   type="text"
@@ -155,7 +193,7 @@ const EditarEmpresa = () => {
                   value={formData.endereco}
                   onChange={handleInputChange}
                   required
-                  placeholder="Rua, número, bairro, cidade, estado"
+                  placeholder="Rua, numero, bairro, cidade, estado"
                 />
               </div>
               <div className="form-group">
@@ -175,11 +213,11 @@ const EditarEmpresa = () => {
             </div>
           </div>
           <div className="form-section">
-            <h3>💼 Informações Empresariais</h3>
+            <h3>Informacoes Empresariais</h3>
             <div className="form-grid">
               <div className="form-group">
                 <label htmlFor="areaAtuacao">
-                  Área de Atuação *
+                  Area de Atuacao *
                 </label>
                 <input
                   type="text"
@@ -205,7 +243,7 @@ const EditarEmpresa = () => {
                   <option value="">Selecione o porte</option>
                   <option value="micro">Microempresa</option>
                   <option value="pequena">Pequena Empresa</option>
-                  <option value="media">Média Empresa</option>
+                  <option value="media">Media Empresa</option>
                   <option value="grande">Grande Empresa</option>
                 </select>
               </div>
@@ -227,52 +265,37 @@ const EditarEmpresa = () => {
             </div>
           </div>
           <div className="form-section">
-            <h3>📝 Observações Adicionais</h3>
+            <h3>Observacoes Adicionais</h3>
             <div className="form-group full-width">
               <label htmlFor="observacoes">
-                Observações Importantes
+                Observacoes Importantes
               </label>
               <textarea
                 id="observacoes"
                 name="observacoes"
                 value={formData.observacoes}
                 onChange={handleInputChange}
-                placeholder="Informações adicionais relevantes sobre a empresa"
+                placeholder="Informacoes adicionais relevantes sobre a empresa"
                 rows="4"
               />
             </div>
           </div>
           {submitStatus && (
             <div className={`submit-status ${submitStatus}`}>
-              {submitStatus === 'success' ? (
-                <>
-                  Empresa atualizada com sucesso! 🎉
-                </>
-              ) : (
-                <>
-                  Erro ao atualizar empresa. Tente novamente.
-                </>
-              )}
+              {submitStatus === 'success' ? 'Empresa atualizada com sucesso.' : 'Erro ao atualizar empresa. Tente novamente.'}
             </div>
           )}
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             className={`submit-button ${isSubmitting ? 'loading' : ''}`}
             disabled={isSubmitting}
           >
-            {isSubmitting ? (
-              <>
-                Atualizando...
-              </>
-            ) : (
-              <>
-                Atualizar Empresa
-              </>
-            )}
+            {isSubmitting ? 'Atualizando...' : 'Atualizar Empresa'}
           </button>
         </form>
       </div>
     </div>
   );
 };
+
 export default EditarEmpresa;

@@ -7,6 +7,8 @@
     "start:dev": "ts-node-dev --respawn --transpile-only src/main.ts",
     "build": "tsc -p tsconfig.json",
     "start": "node dist/main.js",
+    "test": "npm run build && node --test test/estudantes.service.test.js test/avaliacoes.service.test.js test/relacionamentos.service.test.js",
+    "test:watch": "node --test --watch test/estudantes.service.test.js test/avaliacoes.service.test.js test/relacionamentos.service.test.js",
     "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js -d src/database/data-source.ts",
     "typeorm:migration:run": "npm run typeorm -- migration:run",
     "typeorm:migration:revert": "npm run typeorm -- migration:revert"
@@ -28,6 +30,7 @@
   "devDependencies": {
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.6.3"
+    "typescript": "^5.6.3",
+    "vitest": "^3.2.4"
   }
 }

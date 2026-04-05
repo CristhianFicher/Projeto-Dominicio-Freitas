@@ -36,7 +36,7 @@ export default function CadastroEmpresas() {
       await dispatch(addEmpresa({
         ...formData,
         renda: parseFloat(formData.renda) || 0
-      }));
+      })).unwrap();
       setSubmitStatus('success');
       setTimeout(() => {
         navigate('/empresas');

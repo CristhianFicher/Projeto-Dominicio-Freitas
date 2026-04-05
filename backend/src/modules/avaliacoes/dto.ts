@@ -1,17 +1,111 @@
-import { IsDateString, IsInt, IsNotEmpty, IsObject, IsOptional, IsString, Min } from 'class-validator';
+import { IsDateString, IsIn, IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
 
-export class CreateAvaliacaoDto {
-  @IsString() @IsNotEmpty() estudanteId: string;
-  @IsInt() @Min(1) tipoAvaliacao: number;
-  @IsDateString() dataAvaliacao: string;
-  @IsObject() respostas: Record<string, string>;
-  @IsOptional() @IsString() observacoes?: string;
+class AvaliacaoBaseDto {
+  @IsString() @IsNotEmpty() pessoa_id: string;
+  @IsDateString() data_avaliacao: string;
+  @IsString() @IsIn(['inicial', 'acompanhamento']) tipo: 'inicial' | 'acompanhamento';
+  @IsString() @IsNotEmpty() @MaxLength(100) professor_responsavel: string;
+
+  @IsOptional() @IsString() @MaxLength(20) q01?: string;
+  @IsOptional() @IsString() @MaxLength(20) q02?: string;
+  @IsOptional() @IsString() @MaxLength(20) q03?: string;
+  @IsOptional() @IsString() @MaxLength(20) q04?: string;
+  @IsOptional() @IsString() @MaxLength(20) q05?: string;
+  @IsOptional() @IsString() @MaxLength(20) q06?: string;
+  @IsOptional() @IsString() @MaxLength(20) q07?: string;
+  @IsOptional() @IsString() @MaxLength(20) q08?: string;
+  @IsOptional() @IsString() @MaxLength(20) q09?: string;
+  @IsOptional() @IsString() @MaxLength(20) q10?: string;
+  @IsOptional() @IsString() @MaxLength(20) q11?: string;
+  @IsOptional() @IsString() @MaxLength(20) q12?: string;
+  @IsOptional() @IsString() @MaxLength(20) q13?: string;
+  @IsOptional() @IsString() @MaxLength(20) q14?: string;
+  @IsOptional() @IsString() @MaxLength(20) q15?: string;
+  @IsOptional() @IsString() @MaxLength(20) q16?: string;
+  @IsOptional() @IsString() @MaxLength(20) q17?: string;
+  @IsOptional() @IsString() @MaxLength(20) q18?: string;
+  @IsOptional() @IsString() @MaxLength(20) q19?: string;
+  @IsOptional() @IsString() @MaxLength(20) q20?: string;
+  @IsOptional() @IsString() @MaxLength(20) q21?: string;
+  @IsOptional() @IsString() @MaxLength(20) q22?: string;
+  @IsOptional() @IsString() @MaxLength(20) q23?: string;
+  @IsOptional() @IsString() @MaxLength(20) q24?: string;
+  @IsOptional() @IsString() @MaxLength(20) q25?: string;
+  @IsOptional() @IsString() @MaxLength(20) q26?: string;
+  @IsOptional() @IsString() @MaxLength(20) q27?: string;
+  @IsOptional() @IsString() @MaxLength(20) q28?: string;
+  @IsOptional() @IsString() @MaxLength(20) q29?: string;
+  @IsOptional() @IsString() @MaxLength(20) q30?: string;
+  @IsOptional() @IsString() @MaxLength(20) q31?: string;
+  @IsOptional() @IsString() @MaxLength(20) q32?: string;
+  @IsOptional() @IsString() @MaxLength(20) q33?: string;
+  @IsOptional() @IsString() @MaxLength(20) q34?: string;
+  @IsOptional() @IsString() @MaxLength(20) q35?: string;
+  @IsOptional() @IsString() @MaxLength(20) q36?: string;
+  @IsOptional() @IsString() @MaxLength(20) q37?: string;
+  @IsOptional() @IsString() @MaxLength(20) q38?: string;
+  @IsOptional() @IsString() @MaxLength(20) q39?: string;
+  @IsOptional() @IsString() @MaxLength(20) q40?: string;
+  @IsOptional() @IsString() @MaxLength(20) q41?: string;
+  @IsOptional() @IsString() @MaxLength(20) q42?: string;
+  @IsOptional() @IsString() @MaxLength(20) q43?: string;
+  @IsOptional() @IsString() @MaxLength(20) q44?: string;
+  @IsOptional() @IsString() @MaxLength(20) q45?: string;
+  @IsOptional() @IsString() @MaxLength(20) q46?: string;
 }
 
+export class CreateAvaliacaoDto extends AvaliacaoBaseDto {}
+
 export class UpdateAvaliacaoDto {
-  @IsOptional() @IsString() estudanteId?: string;
-  @IsOptional() @IsInt() @Min(1) tipoAvaliacao?: number;
-  @IsOptional() @IsDateString() dataAvaliacao?: string;
-  @IsOptional() @IsObject() respostas?: Record<string, string>;
-  @IsOptional() @IsString() observacoes?: string;
+  @IsOptional() @IsString() pessoa_id?: string;
+  @IsOptional() @IsDateString() data_avaliacao?: string;
+  @IsOptional() @IsString() @IsIn(['inicial', 'acompanhamento']) tipo?: 'inicial' | 'acompanhamento';
+  @IsOptional() @IsString() @MaxLength(100) professor_responsavel?: string;
+
+  @IsOptional() @IsString() @MaxLength(20) q01?: string;
+  @IsOptional() @IsString() @MaxLength(20) q02?: string;
+  @IsOptional() @IsString() @MaxLength(20) q03?: string;
+  @IsOptional() @IsString() @MaxLength(20) q04?: string;
+  @IsOptional() @IsString() @MaxLength(20) q05?: string;
+  @IsOptional() @IsString() @MaxLength(20) q06?: string;
+  @IsOptional() @IsString() @MaxLength(20) q07?: string;
+  @IsOptional() @IsString() @MaxLength(20) q08?: string;
+  @IsOptional() @IsString() @MaxLength(20) q09?: string;
+  @IsOptional() @IsString() @MaxLength(20) q10?: string;
+  @IsOptional() @IsString() @MaxLength(20) q11?: string;
+  @IsOptional() @IsString() @MaxLength(20) q12?: string;
+  @IsOptional() @IsString() @MaxLength(20) q13?: string;
+  @IsOptional() @IsString() @MaxLength(20) q14?: string;
+  @IsOptional() @IsString() @MaxLength(20) q15?: string;
+  @IsOptional() @IsString() @MaxLength(20) q16?: string;
+  @IsOptional() @IsString() @MaxLength(20) q17?: string;
+  @IsOptional() @IsString() @MaxLength(20) q18?: string;
+  @IsOptional() @IsString() @MaxLength(20) q19?: string;
+  @IsOptional() @IsString() @MaxLength(20) q20?: string;
+  @IsOptional() @IsString() @MaxLength(20) q21?: string;
+  @IsOptional() @IsString() @MaxLength(20) q22?: string;
+  @IsOptional() @IsString() @MaxLength(20) q23?: string;
+  @IsOptional() @IsString() @MaxLength(20) q24?: string;
+  @IsOptional() @IsString() @MaxLength(20) q25?: string;
+  @IsOptional() @IsString() @MaxLength(20) q26?: string;
+  @IsOptional() @IsString() @MaxLength(20) q27?: string;
+  @IsOptional() @IsString() @MaxLength(20) q28?: string;
+  @IsOptional() @IsString() @MaxLength(20) q29?: string;
+  @IsOptional() @IsString() @MaxLength(20) q30?: string;
+  @IsOptional() @IsString() @MaxLength(20) q31?: string;
+  @IsOptional() @IsString() @MaxLength(20) q32?: string;
+  @IsOptional() @IsString() @MaxLength(20) q33?: string;
+  @IsOptional() @IsString() @MaxLength(20) q34?: string;
+  @IsOptional() @IsString() @MaxLength(20) q35?: string;
+  @IsOptional() @IsString() @MaxLength(20) q36?: string;
+  @IsOptional() @IsString() @MaxLength(20) q37?: string;
+  @IsOptional() @IsString() @MaxLength(20) q38?: string;
+  @IsOptional() @IsString() @MaxLength(20) q39?: string;
+  @IsOptional() @IsString() @MaxLength(20) q40?: string;
+  @IsOptional() @IsString() @MaxLength(20) q41?: string;
+  @IsOptional() @IsString() @MaxLength(20) q42?: string;
+  @IsOptional() @IsString() @MaxLength(20) q43?: string;
+  @IsOptional() @IsString() @MaxLength(20) q44?: string;
+  @IsOptional() @IsString() @MaxLength(20) q45?: string;
+  @IsOptional() @IsString() @MaxLength(20) q46?: string;
 }

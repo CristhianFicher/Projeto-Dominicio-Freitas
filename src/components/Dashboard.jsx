@@ -29,28 +29,28 @@ const Dashboard = () => {
       value: estudantes.length,
       icon: 'ES',
       color: 'blue',
-      description: 'Registros em estudantes (db.json)',
+      description: 'Registros carregados da API de estudantes',
     },
     {
       title: 'Empresas inclusivas',
       value: empresas.length,
       icon: 'EM',
       color: 'green',
-      description: 'Registros em empresas (db.json)',
+      description: 'Registros carregados da API de empresas',
     },
     {
       title: 'Funcionarios de apoio',
       value: funcionarios.length,
       icon: 'FN',
       color: 'purple',
-      description: 'Registros em funcionarios (db.json)',
+      description: 'Registros carregados da API de funcionarios',
     },
     {
       title: 'Avaliacoes realizadas',
       value: avaliacoes.length,
       icon: 'AV',
       color: 'orange',
-      description: 'Registros em avaliacoes (db.json)',
+      description: 'Registros carregados da API de avaliacoes',
     },
   ];
 
@@ -94,21 +94,7 @@ const Dashboard = () => {
           </div>
         ))}
       </div>
-      <section className="relacionamentos-overview">
-        <header>
-          <h2>🧩 Visão geral dos relacionamentos</h2>
-          <p>Estrutura de dados referência para preparar o front-end para integração com backend.</p>
-        </header>
-        <div className="relacoes-box">
-          <h3>Relacionamentos principais</h3>
-          <ul>
-            <li>Uma Pessoa pode ter várias Avaliações.</li>
-            <li>Uma Pessoa pode ter várias Fichas de Acompanhamento.</li>
-            <li>Uma Empresa pode receber várias Fichas e Encaminhamentos.</li>
-            <li>Uma Pessoa pode participar de vários Encaminhamentos.</li>
-          </ul>
-        </div>
-      </section>
+      <RelacionamentosOverview />
       <div className="dashboard-content">
         <div className="dashboard-section">
           <h2>Acoes rapidas</h2>

@@ -1,51 +1,74 @@
 # Checklist de migracao JSON Server -> API real
 
-Data da revisao: 2026-03-29
+Data da revisao: 2026-04-05
 
-## 1) Mapeamento completo das chamadas do front (json-server)
+## 1) Chamadas do frontend mapeadas
 
-Chamadas encontradas no front:
+Chamadas confirmadas no frontend atual:
+
 - `GET/POST/PUT/DELETE /estudantes`
 - `GET/POST/PUT/DELETE /empresas`
 - `GET/POST/PUT/DELETE /funcionarios`
 - `GET/POST/PUT/DELETE /avaliacoes`
 - `GET/POST/DELETE /relacionamentos`
 
-Arquivos de origem:
+Arquivos principais:
+
 - `src/redux/slices/estudantesSlice.js`
 - `src/redux/slices/empresasSlice.js`
 - `src/redux/slices/funcionariosSlice.js`
 - `src/redux/slices/avaliacoesSlice.js`
 - `src/components/RelacionarEstudanteEmpresa.jsx`
 
-## 2) Rotas da API real verificadas com Postman
+## 2) Validacao da API real
 
 Status atual:
-- Nao foi possivel validar a API real deste projeto neste repositorio.
-- A colecao encontrada (`backend/postman/RedCar.postman_collection.json`) pertence a outro projeto e foi desconsiderada.
 
-Pendencia para concluir:
-- Receber a colecao Postman correta da API da ONG (ou base URL + endpoints reais).
+- backend compilado com sucesso em `backend/`
+- PostgreSQL local validado via `docker compose`
+- migrations executadas/localizadas corretamente
+- chamadas HTTP reais executadas com sucesso para:
+  - `GET /api/estudantes`
+  - `GET /api/empresas`
+  - `GET /api/funcionarios`
+  - `GET /api/avaliacoes`
+  - `GET /api/relacionamentos`
+- ciclo completo de `POST`, `PUT` e `DELETE` validado em `estudantes`
+- modulo de avaliacoes validado com:
+  - `GET /api/avaliacoes`
+  - `GET /api/avaliacoes?pessoa_id=<uuid>`
+  - `GET /api/avaliacoes/:id`
+  - `POST /api/avaliacoes`
 
-## 3) Ordem de migracao (prioridade)
+Colecao Postman encontrada:
 
-1. GET (listagens)
-2. POST (criacao)
-3. PUT (edicao)
-4. DELETE (remocao)
-5. Relacionamentos (ajuste de modelo/rota na API real se necessario)
+- `backend/postman/ONG.postman_collection.json`
 
-## 4) Primeira funcionalidade (GET)
+## 3) Ajustes realizados no frontend
 
-Status atual:
-- A migracao correta para API real foi pausada ate receber o contrato de rotas da API da ONG.
-- O front foi revertido para o estado original (sem dependencias do backend RedCar).
+- telas de edicao migradas do contexto local legado para Redux + API real
+- tela de avaliacao corrigida para ler estudantes/avaliacoes da store real
+- payload de avaliacao adaptado para `pessoa_id`, `tipo`, `professor_responsavel` e `q01..q46`
+- rota `/relacionamentos` ligada ao componente funcional de relacionamento
+- cadastros de estudantes e empresas ajustados para tratar erro real da API com `unwrap()`
+- dashboard atualizado para refletir dados vindos da API, e nao mais de `db.json`
 
----
+## 4) Testes automatizados adicionados
+
+Frontend:
+
+- avaliacao em modo somente leitura quando ja existe registro
+- edicao de estudante usando UUID e `PUT` real da API
+
+Backend:
+
+- `EstudantesService`
+- `AvaliacoesService`
+- `RelacionamentosService`
 
 ## Checklist de saida
 
 - [x] Mapeamento das rotas concluido.
-- [ ] Rotas da API real verificadas com Postman.
-- [x] Plano de migracao definido.
-- [ ] Primeira funcionalidade totalmente migrada para API real.
+- [x] API real validada localmente com chamadas reais.
+- [x] Frontend migrado para o backend real nos fluxos criticos.
+- [x] Testes automatizados adicionados.

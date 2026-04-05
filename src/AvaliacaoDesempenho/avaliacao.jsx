@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addAvaliacao, fetchAvaliacoes } from '../redux/slices/avaliacoesSlice';
@@ -55,18 +55,26 @@ const PERGUNTAS = [
 ];
 
 const OPCOES = [
-  { value: 'sim', label: 'Sim' },
-  { value: 'maioria', label: 'Maioria das vezes' },
-  { value: 'rara', label: 'Raramente' },
-  { value: 'nao', label: 'Nao' },
+  { value: 'Sim', label: 'Sim' },
+  { value: 'Maioria', label: 'Maioria' },
+  { value: 'Raramente', label: 'Raramente' },
+  { value: 'Nao', label: 'Nao' },
 ];
+
+function getTipoApi(tipoTela) {
+  return String(tipoTela) === '2' ? 'acompanhamento' : 'inicial';
+}
+
+function buildEmptyAnswers() {
+  return Object.fromEntries(
+    PERGUNTAS.map((_, index) => [`q${String(index + 1).padStart(2, '0')}`, '']),
+  );
+}
 
 export default function Avaliacao() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { obterEstudantePorId } = useEstudantes();
-  const { obterAvaliacaoPorEstudanteETipo } = useAvaliacoes();
   const estudanteId = searchParams.get('estudante');
   const tipoFromUrl = searchParams.get('tipo');
 
@@ -74,70 +82,76 @@ export default function Avaliacao() {
   const { items: avaliacoes, status: avaliacoesStatus } = useSelector((state) => state.avaliacoes);
 
   const [tipoAvaliacao, setTipoAvaliacao] = useState(tipoFromUrl || '1');
-  const [formData, setFormData] = useState({});
-  const [observacoes, setObservacoes] = useState('');
+  const [respostas, setRespostas] = useState(() => buildEmptyAnswers());
+  const [professorResponsavel, setProfessorResponsavel] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
-  const [isReadOnly] = useState(!!avaliacaoExistente);
-  const perguntas = [
-    "Atende as regras?",
-    "Socializa com o grupo?",
-    "Isola-se do grupo?",
-    "Possui tolerância a frustração?",
-    "Respeita colega e professores?",
-    "Faz relatos fantasiosos?",
-    "Concentra-se nas atividades?",
-    "Tem iniciativa?",
-    "Sonolência durante as atividades em sala de aula?",
-    "Alterações intensas de humor?",
-    "Indica oscilação repentina de humor?",
-    "Irrita-se com facilidade?",
-    "Ansiedade?",
-    "Escuta quando seus colegas falam?",
-    "Escuta e segue orientação dos professores?",
-    "Mantém-se em sala de aula?",
-    "Desloca-se muito na sala?",
-    "Fala demasiadamente?",
-    "É pontual?",
-    "É assíduo?",
-    "Demonstra desejo de trabalhar?",
-    "Apropria-se indevidamente daquilo que não é seu?",
-    "Indica hábito de banho diário?",
-    "Indica hábito de escovação e qualidade na escovação?",
-    "Indica cuidado com a aparência e limpeza do uniforme?",
-    "Indica autonomia quanto a estes hábitos?",
-    "Indica falta do uso de medicação com oscilações de comportamento?",
-    "Tem meio articulado de conseguir receitas e aquisições das medicações?",
-    "Traz seus materiais organizados?",
-    "Usa transporte coletivo?",
-    "Tem iniciativa diante das atividades propostas?",
-    "Localiza-se no espaço da Instituição?",
-    "Situa-se nas trocas de sala e atividades?",
-    "Interage par a par?",
-    "Interage em grupo?",
-    "Cria conflitos e intrigas?",
-    "Promove a harmonia?",
-    "Faz intrigas entre colegas x professores?",
-    "Demonstra interesse em participar das atividades extraclasses?",
-    "Existe interação/participação da família em apoio ao usuário na Instituição?",
-    "Existe superproteção por parte da família quanto a autonomia do usuário?",
-    "Usuário traz relatos negativos da família (de forma geral)?",
-    "Usuário traz relatos positivos da família (de forma geral)?",
-    "Existe incentivo quanto a busca de autonomia para o usuário por parte da família?",
-    "Existe incentivo quanto a inserção do usuário no mercado de trabalho por parte da família?",
-    "Traz os documentos enviados pela Instituição assinado?",
-  ];
-  const handleInputChange = (perguntaIndex, value) => {
-    setFormData(prev => ({
+
+  useEffect(() => {
+    if (estudantesStatus === 'idle') {
+      dispatch(fetchEstudantes());
+    }
+
+    if (avaliacoesStatus === 'idle') {
+      dispatch(fetchAvaliacoes());
+    }
+  }, [avaliacoesStatus, dispatch, estudantesStatus]);
+
+  const estudante = useMemo(
+    () => estudantes.find((item) => String(item.id) === String(estudanteId)),
+    [estudantes, estudanteId],
+  );
+
+  const tipoApi = useMemo(() => getTipoApi(tipoAvaliacao), [tipoAvaliacao]);
+
+  const avaliacaoExistente = useMemo(
+    () =>
+      avaliacoes.find(
+        (item) =>
+          String(item.pessoa_id) === String(estudanteId) &&
+          String(item.tipo) === String(tipoApi),
+      ),
+    [avaliacoes, estudanteId, tipoApi],
+  );
+
+  const isReadOnly = Boolean(avaliacaoExistente);
+  const respostasCompletas = useMemo(
+    () => Object.values(respostas).every(Boolean),
+    [respostas],
+  );
+
+  useEffect(() => {
+    if (avaliacaoExistente) {
+      const nextRespostas = buildEmptyAnswers();
+      Object.keys(nextRespostas).forEach((key) => {
+        nextRespostas[key] = avaliacaoExistente[key] || '';
+      });
+      setRespostas(nextRespostas);
+      setProfessorResponsavel(avaliacaoExistente.professor_responsavel || '');
+      setSubmitStatus(null);
+      return;
+    }
+
+    setRespostas(buildEmptyAnswers());
+    setProfessorResponsavel('');
+    setSubmitStatus(null);
+  }, [avaliacaoExistente]);
+
+  const handleOptionChange = (questionKey, value) => {
+    if (isReadOnly) {
+      return;
+    }
+
+    setRespostas((prev) => ({
       ...prev,
-      [`pergunta_${perguntaIndex}`]: value,
+      [questionKey]: value,
     }));
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!estudanteId || !respostasCompletas) {
+    if (!estudanteId || !respostasCompletas || !professorResponsavel || isReadOnly) {
       setSubmitStatus('error');
       return;
     }
@@ -148,18 +162,18 @@ export default function Avaliacao() {
     try {
       await dispatch(
         addAvaliacao({
-          estudanteId: String(estudanteId),
-          tipoAvaliacao: Number(tipoAvaliacao),
-          dataAvaliacao: new Date().toISOString().split('T')[0],
-          respostas: formData,
-          observacoes,
-        })
+          pessoa_id: String(estudanteId),
+          data_avaliacao: new Date().toISOString().split('T')[0],
+          tipo: tipoApi,
+          professor_responsavel: professorResponsavel,
+          ...respostas,
+        }),
       ).unwrap();
 
       setSubmitStatus('success');
       setTimeout(() => {
-        window.location.href = '/avaliacoes';
-      }, 2000);
+        navigate('/avaliacoes');
+      }, 1200);
     } catch {
       setSubmitStatus('error');
     } finally {
@@ -179,13 +193,36 @@ export default function Avaliacao() {
     );
   }
 
+  if ((estudantesStatus === 'idle' || estudantesStatus === 'loading') && !estudante) {
+    return (
+      <div className="avaliacao-body">
+        <div className="avaliacao-container">
+          <h2 className="avaliacao-title">Avaliacao</h2>
+          <p>Carregando estudante...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!estudante) {
+    return (
+      <div className="avaliacao-body">
+        <div className="avaliacao-container">
+          <h2 className="avaliacao-title">Avaliacao</h2>
+          <p>Estudante nao encontrado.</p>
+          <Link to="/avaliacoes" className="avaliacao-button">Voltar</Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="avaliacao-body">
       <Link to="/avaliacoes" className="avaliacao-back">Voltar para avaliacoes</Link>
       <div className="avaliacao-container">
         <h2 className="avaliacao-title">
           {isReadOnly ? 'Visualizar avaliacao' : 'Avaliacao'} {tipoAvaliacao}a experiencia
-          {estudante ? ` - ${estudante.nome}` : ''}
+          {` - ${estudante.nome}`}
         </h2>
 
         <form className="avaliacao-form" onSubmit={handleSubmit}>
@@ -198,7 +235,7 @@ export default function Avaliacao() {
                   type="button"
                   className={`tipo-botao ${String(tipoAvaliacao) === String(tipo) ? 'active' : ''}`}
                   onClick={() => setTipoAvaliacao(String(tipo))}
-                  disabled={Boolean(tipoFromUrl) || isReadOnly}
+                  disabled={Boolean(tipoFromUrl) || isSubmitting}
                 >
                   Avaliacao {tipo}
                 </button>
@@ -206,12 +243,24 @@ export default function Avaliacao() {
             </div>
           </div>
 
+          <label className="avaliacao-label">
+            Professor responsavel
+            <input
+              className="avaliacao-input"
+              type="text"
+              value={professorResponsavel}
+              onChange={(event) => setProfessorResponsavel(event.target.value)}
+              disabled={isReadOnly}
+              required
+            />
+          </label>
+
           {PERGUNTAS.map((pergunta, index) => {
-            const key = `pergunta_${index}`;
-            const selected = formData[key] || '';
+            const questionKey = `q${String(index + 1).padStart(2, '0')}`;
+            const selected = respostas[questionKey] || '';
 
             return (
-              <fieldset key={key} className="avaliacao-question" disabled={isReadOnly}>
+              <fieldset key={questionKey} className="avaliacao-question" disabled={isReadOnly}>
                 <legend>{index + 1} - {pergunta}</legend>
                 <div className="avaliacao-options">
                   {OPCOES.map((opcao) => (
@@ -221,10 +270,10 @@ export default function Avaliacao() {
                     >
                       <input
                         type="radio"
-                        name={key}
+                        name={questionKey}
                         value={opcao.value}
                         checked={selected === opcao.value}
-                        onChange={() => handleOptionChange(index, opcao.value)}
+                        onChange={() => handleOptionChange(questionKey, opcao.value)}
                         required={!isReadOnly}
                       />
                       <span>{opcao.label}</span>
@@ -235,22 +284,11 @@ export default function Avaliacao() {
             );
           })}
 
-          <label className="avaliacao-label">
-            Observacoes
-            <textarea
-              className="avaliacao-input"
-              rows="4"
-              value={observacoes}
-              onChange={(event) => setObservacoes(event.target.value)}
-              disabled={isReadOnly}
-            />
-          </label>
-
           {submitStatus === 'success' && <div className="submit-status success">Avaliacao salva com sucesso.</div>}
-          {submitStatus === 'error' && <div className="submit-status error">Preencha todas as respostas antes de salvar.</div>}
+          {submitStatus === 'error' && <div className="submit-status error">Nao foi possivel salvar a avaliacao.</div>}
 
           {!isReadOnly && (
-            <button type="submit" className={`avaliacao-button ${isSubmitting ? 'loading' : ''}`} disabled={isSubmitting || !respostasCompletas}>
+            <button type="submit" className={`avaliacao-button ${isSubmitting ? 'loading' : ''}`} disabled={isSubmitting || !respostasCompletas || !professorResponsavel}>
               {isSubmitting ? 'Salvando...' : 'Salvar avaliacao'}
             </button>
           )}

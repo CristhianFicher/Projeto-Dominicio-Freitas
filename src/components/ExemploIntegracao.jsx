@@ -37,7 +37,15 @@ const ExemploIntegracao = () => {
     setSubmitStatus(null);
     try {
       await estudanteSchema.validate(formData, { abortEarly: false });
-      await dispatch(addEstudante(formData)).unwrap();
+      await dispatch(addEstudante({
+        ...formData,
+        dataNascimento: '2010-01-01',
+        telefone: '(48) 99999-0000',
+        endereco: 'Endereco de exemplo',
+        nomeResponsavel: 'Responsavel de exemplo',
+        telefoneResponsavel: '(48) 99999-0001',
+        grauAutismo: 'leve',
+      })).unwrap();
       setSubmitStatus('success');
       setFormData({ nome: '', email: '', cpf: '' });
     } catch (error) {

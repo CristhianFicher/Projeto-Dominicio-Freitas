@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { AvaliacoesService } from './avaliacoes.service';
 import { CreateAvaliacaoDto, UpdateAvaliacaoDto } from './dto';
 
@@ -7,13 +7,13 @@ export class AvaliacoesController {
   constructor(private readonly service: AvaliacoesService) {}
 
   @Get()
-  list() {
-    return this.service.list();
+  list(@Query('pessoa_id') pessoa_id?: string) {
+    return this.service.list(pessoa_id);
   }
 
   @Get(':id')
   get(@Param('id') id: string) {
-    return this.service.get(id);
+    return this.service.get(Number(id));
   }
 
   @Post()
@@ -23,11 +23,11 @@ export class AvaliacoesController {
 
   @Put(':id')
   update(@Param('id') id: string, @Body() dto: UpdateAvaliacaoDto) {
-    return this.service.update(id, dto);
+    return this.service.update(Number(id), dto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.service.remove(id);
+    return this.service.remove(Number(id));
   }
 }

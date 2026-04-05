@@ -59,7 +59,7 @@ export default function CadastroAlunos() {
     try {
       await validationSchema.validate(formData, { abortEarly: false });
       await new Promise(resolve => setTimeout(resolve, 1500));
-      await dispatch(addEstudante(formData));
+      await dispatch(addEstudante(formData)).unwrap();
       setSubmitStatus('success');
       setTimeout(() => {
         navigate('/cadastroAlunos');

@@ -1,88 +1,114 @@
-# Projeto de Extensão 4 — Sistema para ONG
+# Projeto Diomicio Freitas
 
-Este projeto está sendo desenvolvido por **Cristhian** e **Ghustavo** com foco em apoiar o trabalho de uma ONG no acompanhamento de alunos/usuários, relacionamento com empresas parceiras e organização das informações de avaliação e encaminhamento ao trabalho.
+Aplicacao full stack para cadastro e acompanhamento de estudantes, empresas, funcionarios, avaliacoes e relacionamentos.
 
-A proposta é criar uma base sólida de dados e processos para facilitar a rotina da equipe da ONG, melhorar o controle das informações e apoiar decisões com mais clareza.
+## Status atual
 
----
-## 👥 Equipe do projeto
+- Frontend React/Vite integrado com a API real via Redux Toolkit + Axios.
+- Backend NestJS + TypeORM + PostgreSQL validado localmente.
+- Fluxos de listagem, cadastro, edicao, avaliacao e relacionamentos apontam para a API em `http://localhost:3001/api`.
+- O modulo de avaliacoes foi adaptado ao contrato da atividade com `pessoa_id`, `tipo`, `professor_responsavel` e `q01..q46`.
+- Testes automatizados adicionados para frontend e backend.
 
-- **Cristhian**
-- **Ghustavo**
+## Tecnologias
 
----
+- Frontend: React, Vite, Redux Toolkit, React Router, Axios
+- Backend: NestJS, TypeORM, PostgreSQL
+- Testes: Vitest no frontend e Node test runner no backend
 
-## ✅ Entrega atual (Atividade 01)
+## Como rodar
 
-Nesta etapa, nosso foco foi estruturar o **modelo lógico de banco de dados** com as 6 tabelas obrigatórias do projeto:
+### 1. Frontend
 
-1. **usuarios** — controle de acesso ao sistema (login e recuperação de senha)
-2. **pessoas** — dados dos alunos/usuários atendidos pela ONG
-3. **empresas** — empresas parceiras
-4. **avaliacoes** — avaliações de experiência e acompanhamento
-5. **fichas_acompanhamento** — registro de visitas e acompanhamentos
-6. **encaminhamentos** — registro de alunos encaminhados ao trabalho
+```bash
+npm install
+npm run dev
+```
 
-Também definimos os relacionamentos principais entre pessoas, empresas, avaliações, fichas e encaminhamentos, garantindo uma estrutura coerente para o crescimento do sistema.
+O frontend usa a API definida em `src/services/api.js`, atualmente com `baseURL` em `http://localhost:3001/api`.
 
----
+### 2. Backend
 
-## 🚀 Próximas entregas (curto prazo)
+```bash
+cd backend
+npm install
+copy .env.example .env
+docker compose up -d
+npm run typeorm:migration:run
+npm run start:dev
+```
 
-Nossos próximos passos são:
+Variaveis esperadas no `.env`:
 
-- Implementar o fluxo de **autenticação** (login com e-mail e senha).
-- Implementar o fluxo de **recuperação de senha** com token e validade.
-- Conectar o front-end ao banco para cadastro e consulta das tabelas principais.
-- Criar telas mais objetivas para uso da equipe da ONG no dia a dia.
-- Validar os dados obrigatórios em cada formulário para evitar inconsistências.
+```env
+PORT=3001
+DATABASE_URL=postgres://postgres:postgres@localhost:5433/ong_db
+```
 
----
+## Validacoes executadas
 
-## 💡 Ideias futuras (médio e longo prazo)
+### Backend
 
-Como este é um projeto voltado para uma ONG, queremos evoluir o sistema para gerar impacto real no atendimento. Algumas ideias futuras:
+- `npm run build`
+- subida da API com PostgreSQL local
+- chamada real para:
+  - `GET /api/estudantes`
+  - `GET /api/empresas`
+  - `GET /api/funcionarios`
+  - `GET /api/avaliacoes`
+  - `GET /api/relacionamentos`
+- ciclo completo de `POST`, `PUT` e `DELETE` em `estudantes`
+- validacao real do modulo de avaliacoes com:
+  - `GET /api/avaliacoes`
+  - `GET /api/avaliacoes?pessoa_id=...`
+  - `GET /api/avaliacoes/:id`
+  - `POST /api/avaliacoes`
 
-- **Dashboard com indicadores**:
-  - quantidade de alunos ativos/inativos;
-  - número de encaminhamentos por período;
-  - empresas com mais parcerias.
+### Frontend
 
-- **Histórico completo por aluno**:
-  - avaliações realizadas;
-  - visitas registradas;
-  - situação atual no processo de encaminhamento.
+- `npm run lint`
+- `npm run build`
+- revisao dos fluxos que ainda estavam presos ao estado local antigo
+- migracao das telas de edicao e avaliacao para Redux + API real
+- inclusao da rota funcional `/relacionamentos`
 
-- **Alertas e lembretes automáticos**:
-  - acompanhamento pendente;
-  - vencimento de prazos;
-  - atualização de status de encaminhamento.
+## Testes automatizados
 
-- **Relatórios para prestação de contas da ONG**:
-  - relatórios mensais e semestrais;
-  - dados consolidados para apresentação de resultados.
+### Frontend
 
-- **Melhorias de usabilidade e acessibilidade**:
-  - interface simples para usuários não técnicos;
-  - foco em navegação clara e rápida.
+```bash
+npm run test
+```
 
----
+Cobertura adicionada:
 
-## 🎯 Objetivo do projeto
+- tela de avaliacao em modo somente leitura quando ja existe avaliacao
+- tela de edicao de estudante enviando `PUT` com UUID da API
 
-Nosso objetivo é entregar um sistema organizado, útil e evolutivo, que ajude a ONG a:
+### Backend
 
-- reduzir controles manuais;
-- manter dados centralizados e confiáveis;
-- acompanhar melhor o desenvolvimento dos alunos;
-- fortalecer a ponte entre alunos e empresas parceiras.
+```bash
+cd backend
+npm run test
+```
 
----
+Cobertura adicionada:
 
-## 📅 Referência da atividade
+- comportamento basico do `EstudantesService`
+- comportamento do `AvaliacoesService`
+- comportamento do `RelacionamentosService`, incluindo conversao de `criadoEm`
 
-- **Atividade 01**
-- **Entrega:** 09/03/2026
-- **Peso:** 3,0 pontos
+## Endpoints principais
 
+- `GET/POST/GET:id/PUT:id/DELETE:id /api/estudantes`
+- `GET/POST/GET:id/PUT:id/DELETE:id /api/empresas`
+- `GET/POST/GET:id/PUT:id/DELETE:id /api/funcionarios`
+- `GET/POST/GET:id/PUT:id/DELETE:id /api/avaliacoes`
+- `GET /api/avaliacoes?pessoa_id=<uuid>`
+- `GET/POST/GET:id/PUT:id/DELETE:id /api/relacionamentos`
 
+## Observacoes
+
+- O backend usa UUID como chave primaria.
+- Em avaliacoes, o campo `id` e serial e `pessoa_id` referencia um estudante via UUID.
+- O frontend ainda possui arquivos legados de contexto em `src/context`, mas o fluxo ativo da aplicacao usa Redux e a API real.
