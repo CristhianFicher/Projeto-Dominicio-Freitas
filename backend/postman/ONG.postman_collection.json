@@ -147,12 +147,186 @@
           }
         }
       ]
+    },
+    {
+      "name": "Fichas",
+      "item": [
+        {
+          "name": "Criar",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 201/200', function () { pm.expect(pm.response.code).to.be.oneOf([200,201]); });",
+                  "const json = pm.response.json();",
+                  "pm.collectionVariables.set('fichaId', json.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estudanteId\": \"11111111-1111-1111-1111-111111111111\",\n  \"empresaId\": \"22222222-2222-2222-2222-222222222222\",\n  \"dataRegistro\": \"2026-04-10\",\n  \"status\": \"ativo\",\n  \"descricao\": \"Acompanhamento inicial para vaga administrativa.\",\n  \"proximosPassos\": \"Agendar visita tecnica na empresa.\"\n}"
+            },
+            "url": "{{baseUrl}}/fichas"
+          }
+        },
+        {
+          "name": "Listar",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Retorna array', function () { pm.expect(pm.response.json()).to.be.an('array'); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fichas"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Encaminhamentos",
+      "item": [
+        {
+          "name": "Criar",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 201/200', function () { pm.expect(pm.response.code).to.be.oneOf([200,201]); });",
+                  "const json = pm.response.json();",
+                  "pm.collectionVariables.set('encaminhamentoId', json.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estudanteId\": \"11111111-1111-1111-1111-111111111111\",\n  \"empresaId\": \"22222222-2222-2222-2222-222222222222\",\n  \"fichaAcompanhamentoId\": \"{{fichaId}}\",\n  \"dataEncaminhamento\": \"2026-04-12\",\n  \"status\": \"ativo\",\n  \"observacoes\": \"Encaminhamento para entrevista inicial.\"\n}"
+            },
+            "url": "{{baseUrl}}/encaminhamentos"
+          }
+        },
+        {
+          "name": "Listar",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Retorna array', function () { pm.expect(pm.response.json()).to.be.an('array'); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/encaminhamentos"
+          }
+        },
+        {
+          "name": "Atualizar status",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Status desligado', function () { pm.expect(pm.response.json().status).to.eql('desligado'); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"desligado\"\n}"
+            },
+            "url": "{{baseUrl}}/encaminhamentos/{{encaminhamentoId}}/status"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "item": [
+        {
+          "name": "Visao geral",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+                  "const json = pm.response.json();",
+                  "pm.test('Possui resumo', function () { pm.expect(json).to.have.property('resumo'); });",
+                  "pm.test('Resumo contem fichas e encaminhamentos', function () {",
+                  "  pm.expect(json.resumo).to.have.property('fichasAcompanhamento');",
+                  "  pm.expect(json.resumo).to.have.property('encaminhamentosAtivos');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/dashboard"
+          }
+        }
+      ]
     }
   ],
   "variable": [
     {
       "key": "baseUrl",
       "value": "http://localhost:3001/api"
+    },
+    {
+      "key": "fichaId",
+      "value": ""
+    },
+    {
+      "key": "encaminhamentoId",
+      "value": ""
     }
   ]
 }

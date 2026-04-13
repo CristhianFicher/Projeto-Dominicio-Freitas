@@ -6,6 +6,9 @@ import { EmpresasModule } from './modules/empresas/empresas.module';
 import { FuncionariosModule } from './modules/funcionarios/funcionarios.module';
 import { AvaliacoesModule } from './modules/avaliacoes/avaliacoes.module';
 import { RelacionamentosModule } from './modules/relacionamentos/relacionamentos.module';
+import { FichasModule } from './modules/fichas/fichas.module';
+import { EncaminhamentosModule } from './modules/encaminhamentos/encaminhamentos.module';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -21,6 +24,9 @@ import { RelacionamentosModule } from './modules/relacionamentos/relacionamentos
     FuncionariosModule,
     AvaliacoesModule,
     RelacionamentosModule,
+    FichasModule,
+    EncaminhamentosModule,
+    DashboardModule,
   ],
 })
 export class AppModule {}
