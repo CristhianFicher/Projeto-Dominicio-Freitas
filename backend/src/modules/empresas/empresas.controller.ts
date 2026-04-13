@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { EmpresasService } from './empresas.service';
 import { CreateEmpresaDto, UpdateEmpresaDto } from './dto';
 
@@ -7,8 +7,8 @@ export class EmpresasController {
   constructor(private readonly service: EmpresasService) {}
 
   @Get()
-  list() {
-    return this.service.list();
+  list(@Query('q') q?: string, @Query('cnpj') cnpj?: string) {
+    return this.service.list({ q, cnpj });
   }
 
   @Get(':id')

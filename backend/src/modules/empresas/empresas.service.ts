@@ -10,8 +10,20 @@ export class EmpresasService {
     @InjectRepository(Empresa) private readonly repo: Repository<Empresa>,
   ) {}
 
-  list() {
-    return this.repo.find({ order: { createdAt: 'DESC' } });
+  list(query?: { q?: string; cnpj?: string }) {
+    const qb = this.repo.createQueryBuilder('empresa').orderBy('empresa.createdAt', 'DESC');
+
+    if (query?.q) {
+      qb.andWhere('(empresa.nomeFantasia ILIKE :nome OR empresa.razaoSocial ILIKE :nome)', {
+        nome: `%${query.q}%`,
+      });
+    }
+
+    if (query?.cnpj) {
+      qb.andWhere('empresa.cnpj ILIKE :cnpj', { cnpj: `%${query.cnpj}%` });
+    }
+
+    return qb.getMany();
   }
 
   async get(id: string) {
@@ -35,6 +47,6 @@ export class EmpresasService {
   async remove(id: string) {
     const empresa = await this.get(id);
     await this.repo.remove(empresa);
-    return { id };
+    return { message: 'removido', id };
   }
 }

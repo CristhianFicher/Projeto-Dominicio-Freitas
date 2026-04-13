@@ -73,6 +73,11 @@ O script de testes cobre os servicos de estudantes, avaliacoes e relacionamentos
 - `GET/POST/GET:id/PUT:id/DELETE:id /api/avaliacoes`
 - `GET /api/avaliacoes?pessoa_id=<uuid>`
 - `GET/POST/GET:id/PUT:id/DELETE:id /api/relacionamentos`
+- `GET/POST/GET:id/PUT:id /api/fichas`
+- `GET/POST/GET:id/PUT:id/PATCH:id/status /api/encaminhamentos`
+- `GET /api/encaminhamentos?status=ativo|desligado&empresa_id=<uuid>&pessoa_id=<uuid>`
+- `GET /api/empresas?q=<nome>&cnpj=<trecho>`
+- `GET /api/dashboard`
 
 ## Estrutura importante
 

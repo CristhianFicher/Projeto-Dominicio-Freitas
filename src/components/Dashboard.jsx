@@ -1,150 +1,124 @@
-﻿import { useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchEstudantes } from '../redux/slices/estudantesSlice';
-import { fetchEmpresas } from '../redux/slices/empresasSlice';
-import { fetchFuncionarios } from '../redux/slices/funcionariosSlice';
-import { fetchAvaliacoes } from '../redux/slices/avaliacoesSlice';
-import RelacionamentosOverview from './RelacionamentosOverview';
+import api from '../services/api';
 import './Dashboard.css';
-import './RelacionamentosOverview.css';
-const Dashboard = () => {
-  const dispatch = useDispatch();
 
-  const { items: estudantes, status: estudantesStatus } = useSelector((state) => state.estudantes);
-  const { items: empresas, status: empresasStatus } = useSelector((state) => state.empresas);
-  const { items: funcionarios, status: funcionariosStatus } = useSelector((state) => state.funcionarios);
-  const { items: avaliacoes, status: avaliacoesStatus } = useSelector((state) => state.avaliacoes);
+const Dashboard = () => {
+  const [overview, setOverview] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    if (estudantesStatus === 'idle') dispatch(fetchEstudantes());
-    if (empresasStatus === 'idle') dispatch(fetchEmpresas());
-    if (funcionariosStatus === 'idle') dispatch(fetchFuncionarios());
-    if (avaliacoesStatus === 'idle') dispatch(fetchAvaliacoes());
-  }, [dispatch, estudantesStatus, empresasStatus, funcionariosStatus, avaliacoesStatus]);
+    const loadOverview = async () => {
+      try {
+        setLoading(true);
+        const response = await api.get('/dashboard');
+        setOverview(response.data);
+      } catch (err) {
+        setError('Não foi possível carregar o dashboard agora.');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const stats = [
-    {
-      title: 'Estudantes cadastrados',
-      value: estudantes.length,
-      icon: 'ES',
-      color: 'blue',
-      description: 'Registros carregados da API de estudantes',
-    },
-    {
-      title: 'Empresas inclusivas',
-      value: empresas.length,
-      icon: 'EM',
-      color: 'green',
-      description: 'Registros carregados da API de empresas',
-    },
-    {
-      title: 'Funcionarios de apoio',
-      value: funcionarios.length,
-      icon: 'FN',
-      color: 'purple',
-      description: 'Registros carregados da API de funcionarios',
-    },
-    {
-      title: 'Avaliacoes realizadas',
-      value: avaliacoes.length,
-      icon: 'AV',
-      color: 'orange',
-      description: 'Registros carregados da API de avaliacoes',
-    },
-  ];
+    loadOverview();
+  }, []);
+
+  const resumo = overview?.resumo || {};
+
+  const statCards = useMemo(() => ([
+    { title: 'Estudantes', value: resumo.estudantes || 0, color: 'blue', hint: 'Pessoas acompanhadas' },
+    { title: 'Empresas', value: resumo.empresas || 0, color: 'green', hint: 'Parceiras ativas' },
+    { title: 'Avaliações', value: resumo.avaliacoes || 0, color: 'orange', hint: 'Registros aplicados' },
+    { title: 'Fichas', value: resumo.fichasAcompanhamento || 0, color: 'purple', hint: 'Acompanhamentos ativos' },
+    { title: 'Enc. Ativos', value: resumo.encaminhamentosAtivos || 0, color: 'teal', hint: 'Em andamento' },
+    { title: 'Enc. Desligados', value: resumo.encaminhamentosDesligados || 0, color: 'red', hint: 'Ciclos encerrados' },
+  ]), [resumo]);
 
   const quickActions = [
-    { title: 'Cadastrar estudante', description: 'Registrar novo estudante no sistema', icon: 'ES', link: '/novo-estudante', color: 'blue' },
-    { title: 'Cadastrar empresa', description: 'Registrar nova empresa parceira', icon: 'EM', link: '/nova-empresa', color: 'green' },
-    { title: 'Cadastrar funcionario', description: 'Registrar colaborador de apoio', icon: 'FN', link: '/novo-funcionario', color: 'purple' },
-    { title: 'Nova avaliacao', description: 'Iniciar uma avaliacao de desempenho', icon: 'AV', link: '/avaliacoes', color: 'orange' },
-    { title: 'Relacionar estudante e empresa', description: 'Criar vinculos de encaminhamento', icon: 'RL', link: '/relacionamentos', color: 'teal' },
-  ];
-
-  const recentActivities = [
-    { action: 'Estudante cadastrado', user: 'Cadastro ativo', time: 'agora', type: 'success' },
-    { action: 'Empresa atualizada', user: 'Cadastro ativo', time: 'agora', type: 'info' },
-    { action: 'Avaliacao registrada', user: 'Fluxo em uso', time: 'agora', type: 'success' },
-  ];
-
-  const resources = [
-    { title: 'Guia de estudos', description: 'Metodos de ensino adaptados' },
-    { title: 'Roteiro de entrevista', description: 'Boas praticas para selecao' },
-    { title: 'Plano de habilidades', description: 'Evolucao tecnica e comportamental' },
-    { title: 'Suporte familiar', description: 'Orientacoes de acompanhamento' },
+    { title: 'Nova ficha', link: '/relacionamentos', icon: 'FC' },
+    { title: 'Novo encaminhamento', link: '/relacionamentos', icon: 'EN' },
+    { title: 'Nova avaliação', link: '/avaliacoes', icon: 'AV' },
+    { title: 'Empresas', link: '/empresas', icon: 'EM' },
   ];
 
   return (
-    <div className="dashboard">
-      <div className="dashboard-header">
-        <h1>Instituto de Educacao Especial Diomicio Freitas</h1>
-        <p>Conectando pessoas autistas com oportunidades de educacao e trabalho</p>
+    <div className="dashboard-v2">
+      <div className="dashboard-v2-header">
+        <div>
+          <p className="dashboard-v2-tag">Aba exclusiva de gestão</p>
+          <h1>Dashboard de acompanhamento</h1>
+          <p className="dashboard-v2-subtitle">
+            Visão completa de estudantes, empresas, fichas e encaminhamentos em um só lugar.
+          </p>
+        </div>
+        <Link to="/relacionamentos" className="dashboard-v2-cta">Criar encaminhamento</Link>
       </div>
 
-      <div className="stats-grid">
-        {stats.map((stat) => (
-          <div key={stat.title} className={`stat-card ${stat.color}`}>
-            <div className="stat-icon">{stat.icon}</div>
-            <div className="stat-content">
-              <h3 className="stat-title">{stat.title}</h3>
-              <div className="stat-value">{stat.value}</div>
-              <div className="stat-description">{stat.description}</div>
+      {loading && <div className="dashboard-v2-feedback">Carregando dados do painel...</div>}
+      {error && !loading && <div className="dashboard-v2-feedback error">{error}</div>}
+
+      {!loading && !error && (
+        <>
+          <div className="dashboard-v2-stats">
+            {statCards.map((stat) => (
+              <article key={stat.title} className={`dash-card ${stat.color}`}>
+                <span>{stat.title}</span>
+                <strong>{stat.value}</strong>
+                <small>{stat.hint}</small>
+              </article>
+            ))}
+          </div>
+
+          <div className="dashboard-v2-grid">
+            <section className="dash-panel">
+              <header>
+                <h2>Encaminhamentos recentes</h2>
+              </header>
+              <div className="timeline-list">
+                {(overview?.encaminhamentosRecentes || []).map((item) => (
+                  <div key={item.id} className="timeline-item">
+                    <p>Empresa: {item.empresaId}</p>
+                    <span>Status: {item.status}</span>
+                  </div>
+                ))}
+                {!overview?.encaminhamentosRecentes?.length && <p>Nenhum encaminhamento recente.</p>}
+              </div>
+            </section>
+
+            <section className="dash-panel">
+              <header>
+                <h2>Fichas recentes</h2>
+              </header>
+              <div className="timeline-list">
+                {(overview?.fichasRecentes || []).map((item) => (
+                  <div key={item.id} className="timeline-item">
+                    <p>{item.descricao}</p>
+                    <span>Status: {item.status}</span>
+                  </div>
+                ))}
+                {!overview?.fichasRecentes?.length && <p>Nenhuma ficha recente.</p>}
+              </div>
+            </section>
+          </div>
+
+          <section className="dash-panel actions">
+            <header>
+              <h2>Ações rápidas</h2>
+            </header>
+            <div className="quick-grid">
+              {quickActions.map((action) => (
+                <Link to={action.link} key={action.title} className="quick-card">
+                  <span>{action.icon}</span>
+                  <div>
+                    <h3>{action.title}</h3>
+                  </div>
+                </Link>
+              ))}
             </div>
-          </div>
-        ))}
-      </div>
-      <RelacionamentosOverview />
-      <div className="dashboard-content">
-        <div className="dashboard-section">
-          <h2>Acoes rapidas</h2>
-          <div className="quick-actions-grid">
-            {quickActions.map((action) => (
-              <Link key={action.title} to={action.link} className={`quick-action-card ${action.color}`}>
-                <div className="action-icon">{action.icon}</div>
-                <div className="action-content">
-                  <h3>{action.title}</h3>
-                  <p>{action.description}</p>
-                </div>
-                <div className="action-arrow">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        <div className="dashboard-section">
-          <h2>Recursos de apoio</h2>
-          <div className="resources-grid">
-            {resources.map((resource) => (
-              <div key={resource.title} className="resource-card">
-                <div className="resource-content">
-                  <h3>{resource.title}</h3>
-                  <p>{resource.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="dashboard-section">
-          <h2>Atividades recentes</h2>
-          <div className="activities-list">
-            {recentActivities.map((activity) => (
-              <div key={`${activity.action}-${activity.type}`} className={`activity-item ${activity.type}`}>
-                <div className="activity-content">
-                  <div className="activity-action">{activity.action}</div>
-                  <div className="activity-user">{activity.user}</div>
-                </div>
-                <div className="activity-time">{activity.time}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+          </section>
+        </>
+      )}
     </div>
   );
 };
