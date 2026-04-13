@@ -23,6 +23,15 @@ export class Empresa {
   @Column({ length: 20 })
   numeroContatoRh: string;
 
+  @Column({ type: 'varchar', length: 20, nullable: true })
+  telefone?: string | null;
+
+  @Column({ type: 'varchar', length: 100, nullable: true })
+  contatoRhNome?: string | null;
+
+  @Column({ type: 'varchar', length: 100, nullable: true })
+  contatoRhEmail?: string | null;
+
   @Column({ type: 'float', default: 0 })
   renda: number;
 

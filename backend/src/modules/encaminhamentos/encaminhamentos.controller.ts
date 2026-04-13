@@ -1,14 +1,14 @@
-import { Body, Controller, Get, Param, Patch, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Put, Query } from '@nestjs/common';
 import { EncaminhamentosService } from './encaminhamentos.service';
-import { CreateEncaminhamentoDto, UpdateEncaminhamentoDto, UpdateEncaminhamentoStatusDto } from './dto';
+import { CreateEncaminhamentoDto, ListEncaminhamentosQueryDto, UpdateEncaminhamentoDto, UpdateEncaminhamentoStatusDto } from './dto';
 
 @Controller('encaminhamentos')
 export class EncaminhamentosController {
   constructor(private readonly service: EncaminhamentosService) {}
 
   @Get()
-  list() {
-    return this.service.list();
+  list(@Query() query: ListEncaminhamentosQueryDto) {
+    return this.service.list(query);
   }
 
   @Get(':id')

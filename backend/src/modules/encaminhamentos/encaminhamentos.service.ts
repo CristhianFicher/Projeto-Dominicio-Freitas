@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Encaminhamento } from './encaminhamento.entity';
-import { CreateEncaminhamentoDto, UpdateEncaminhamentoDto } from './dto';
+import { CreateEncaminhamentoDto, ListEncaminhamentosQueryDto, UpdateEncaminhamentoDto } from './dto';
 
 @Injectable()
 export class EncaminhamentosService {
@@ -10,8 +10,18 @@ export class EncaminhamentosService {
     @InjectRepository(Encaminhamento) private readonly repo: Repository<Encaminhamento>,
   ) {}
 
-  list() {
-    return this.repo.find({ order: { createdAt: 'DESC' } });
+  list(query?: ListEncaminhamentosQueryDto) {
+    const estudanteId = query?.estudanteId || query?.pessoa_id;
+    const empresaId = query?.empresaId || query?.empresa_id;
+
+    return this.repo.find({
+      where: {
+        ...(query?.status ? { status: query.status } : {}),
+        ...(estudanteId ? { estudanteId } : {}),
+        ...(empresaId ? { empresaId } : {}),
+      },
+      order: { createdAt: 'DESC' },
+    });
   }
 
   async get(id: string) {

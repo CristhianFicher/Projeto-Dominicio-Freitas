@@ -32,6 +32,18 @@ export class Encaminhamento {
   @Column({ type: 'date' })
   dataEncaminhamento: string;
 
+  @Column({ type: 'date', nullable: true })
+  dataAdmissao?: string | null;
+
+  @Column({ length: 100, nullable: true })
+  funcao?: string | null;
+
+  @Column({ length: 100, nullable: true })
+  contatoRh?: string | null;
+
+  @Column({ type: 'date', nullable: true })
+  dataProvavelDesligamento?: string | null;
+
   @Column({ length: 20, default: 'ativo' })
   status: string;
 
