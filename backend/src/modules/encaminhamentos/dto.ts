@@ -1,4 +1,4 @@
-import { IsDateString, IsIn, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsDateString, IsIn, IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
 
 const STATUS_VALUES = ['ativo', 'desligado'] as const;
 
