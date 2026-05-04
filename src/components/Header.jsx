@@ -8,6 +8,7 @@ const Header = ({ user, onLogout }) => {
 
   const menuItems = [
     { path: '/', label: 'Inicio', icon: 'IN' },
+    { path: '/dashboard', label: 'Dashboard', icon: 'DB' },
     { path: '/cadastroAlunos', label: 'Estudantes', icon: 'ES' },
     { path: '/avaliacoes', label: 'Avaliacoes', icon: 'AV' },
     { path: '/empresas', label: 'Empresas', icon: 'EM' },

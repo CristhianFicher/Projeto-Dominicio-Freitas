@@ -1,8 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, UseGuards, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { AuthGuard } from '../../common/auth/auth.guard';
 import { FuncionariosService } from './funcionarios.service';
 import { CreateFuncionarioDto, UpdateFuncionarioDto } from './dto';
 
 @Controller('funcionarios')
+@UseGuards(AuthGuard)
 export class FuncionariosController {
   constructor(private readonly service: FuncionariosService) {}
 
