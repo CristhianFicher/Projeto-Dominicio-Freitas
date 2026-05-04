@@ -28,7 +28,6 @@ import { AuthModule } from './modules/auth/auth.module';
     FichasModule,
     EncaminhamentosModule,
     DashboardModule,
-    AuthModule,
   ],
 })
 export class AppModule {}
