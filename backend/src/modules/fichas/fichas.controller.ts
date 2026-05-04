@@ -1,8 +1,10 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, UseGuards, Get, Param, Post, Put } from '@nestjs/common';
+import { AuthGuard } from '../../common/auth/auth.guard';
 import { FichasService } from './fichas.service';
 import { CreateFichaAcompanhamentoDto, UpdateFichaAcompanhamentoDto } from './dto';
 
 @Controller('fichas')
+@UseGuards(AuthGuard)
 export class FichasController {
   constructor(private readonly service: FichasService) {}
 

@@ -3,6 +3,7 @@ import { EmpresasService } from './empresas.service';
 import { CreateEmpresaDto, UpdateEmpresaDto } from './dto';
 
 @Controller('empresas')
+@UseGuards(AuthGuard)
 export class EmpresasController {
   constructor(private readonly service: EmpresasService) {}
 

@@ -9,6 +9,7 @@ import { RelacionamentosModule } from './modules/relacionamentos/relacionamentos
 import { FichasModule } from './modules/fichas/fichas.module';
 import { EncaminhamentosModule } from './modules/encaminhamentos/encaminhamentos.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [

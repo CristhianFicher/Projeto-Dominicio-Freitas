@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import Home from './components/Home';
+import SplashScreen from './components/SplashScreen';
 import ListaEstudantes from './components/ListaEstudantes';
 import ListaAvaliacoes from './components/ListaAvaliacoes';
 import ListaEmpresas from './components/ListaEmpresas';
@@ -20,14 +21,31 @@ import RelacionarEstudanteEmpresa from './components/RelacionarEstudanteEmpresa'
 
 function App() {
   const [user, setUser] = useState(null);
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowSplash(false), 1400);
+    const token = localStorage.getItem('authToken');
+
+    if (token) {
+      setUser({ name: 'Administrador', email: 'admin@local', username: 'admin' });
+    }
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleLogin = (userData) => {
     setUser(userData);
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('authToken');
     setUser(null);
   };
+
+  if (showSplash) {
+    return <SplashScreen />;
+  }
 
   return (
     <Router>

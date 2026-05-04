@@ -1,8 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, UseGuards, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { AuthGuard } from '../../common/auth/auth.guard';
 import { RelacionamentosService } from './relacionamentos.service';
 import { CreateRelacionamentoDto, UpdateRelacionamentoDto } from './dto';
 
 @Controller('relacionamentos')
+@UseGuards(AuthGuard)
 export class RelacionamentosController {
   constructor(private readonly service: RelacionamentosService) {}
 
