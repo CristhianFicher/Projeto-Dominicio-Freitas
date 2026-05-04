@@ -6,11 +6,13 @@ const Login = ({ onLogin, onClose, lockScreen = false }) => {
   const [credentials, setCredentials] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [recoveryMessage, setRecoveryMessage] = useState('');
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setCredentials((prev) => ({ ...prev, [name]: value }));
     setError('');
+    setRecoveryMessage('');
   };
 
   const handleSubmit = async (event) => {
@@ -65,9 +67,13 @@ const Login = ({ onLogin, onClose, lockScreen = false }) => {
           </div>
 
           {error && <div className="error-message">{error}</div>}
+          {recoveryMessage && <div className="recovery-message">{recoveryMessage}</div>}
 
           <button type="submit" className={`login-submit ${isLoading ? 'loading' : ''}`} disabled={isLoading}>
             {isLoading ? 'Validando...' : 'Entrar no Portal'}
+          </button>
+          <button type="button" className="forgot-password" onClick={handleRecoverPassword}>
+            Esqueci minha senha
           </button>
         </form>
       </div>
