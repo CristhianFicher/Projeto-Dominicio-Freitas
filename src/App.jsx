@@ -24,7 +24,7 @@ function App() {
   const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowSplash(false), 2200);
+    const timer = setTimeout(() => setShowSplash(false), 1400);
     const token = localStorage.getItem('authToken');
 
     if (token) {

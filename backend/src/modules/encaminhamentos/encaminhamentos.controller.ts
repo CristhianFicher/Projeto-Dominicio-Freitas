@@ -1,10 +1,8 @@
-import { Body, Controller, UseGuards, Get, Param, Patch, Post, Put, Query } from '@nestjs/common';
-import { AuthGuard } from '../../common/auth/auth.guard';
+import { Body, Controller, Get, Param, Patch, Post, Put, Query } from '@nestjs/common';
 import { EncaminhamentosService } from './encaminhamentos.service';
 import { CreateEncaminhamentoDto, ListEncaminhamentosQueryDto, UpdateEncaminhamentoDto, UpdateEncaminhamentoStatusDto } from './dto';
 
 @Controller('encaminhamentos')
-@UseGuards(AuthGuard)
 export class EncaminhamentosController {
   constructor(private readonly service: EncaminhamentosService) {}
 

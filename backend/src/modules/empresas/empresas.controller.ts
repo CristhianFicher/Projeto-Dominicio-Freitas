@@ -1,5 +1,4 @@
-import { Body, Controller, UseGuards, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
-import { AuthGuard } from '../../common/auth/auth.guard';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { EmpresasService } from './empresas.service';
 import { CreateEmpresaDto, UpdateEmpresaDto } from './dto';
 

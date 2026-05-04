@@ -36,12 +36,6 @@ const Login = ({ onLogin, onClose, lockScreen = false }) => {
     }
   };
 
-
-
-  const handleRecoverPassword = () => {
-    setRecoveryMessage('Fluxo de recuperação: informe seu e-mail para receber o link de redefinição.');
-  };
-
   return (
     <div className={`login-overlay ${lockScreen ? 'locked' : ''}`}>
       <div className="login-container">
