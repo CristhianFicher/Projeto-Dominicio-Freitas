@@ -342,3 +342,28 @@
 .login-overlay.locked {
   background: var(--overlay-color);
 }
+
+
+.recovery-message {
+  background: rgba(26, 115, 232, 0.1);
+  border: 1px solid rgba(26, 115, 232, 0.25);
+  color: var(--text);
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.forgot-password {
+  margin-top: 0.75rem;
+  background: transparent;
+  border: none;
+  color: var(--primary);
+  font-weight: 600;
+  cursor: pointer;
+  min-height: auto;
+  padding: 0;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}

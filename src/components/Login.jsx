@@ -1,21 +1,18 @@
 import { useState } from 'react';
+import api from '../services/api';
 import './Login.css';
 
-const DEFAULT_USER = 'admin';
-const DEFAULT_PASSWORD = 'admin';
-
 const Login = ({ onLogin, onClose, lockScreen = false }) => {
-  const [credentials, setCredentials] = useState({
-    username: '',
-    password: ''
-  });
+  const [credentials, setCredentials] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [recoveryMessage, setRecoveryMessage] = useState('');
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setCredentials((prev) => ({ ...prev, [name]: value }));
     setError('');
+    setRecoveryMessage('');
   };
 
   const handleSubmit = async (event) => {
@@ -23,69 +20,26 @@ const Login = ({ onLogin, onClose, lockScreen = false }) => {
     setIsLoading(true);
     setError('');
 
-    await new Promise((resolve) => setTimeout(resolve, 600));
+    try {
+      const { data } = await api.post('/auth/login', credentials);
+      localStorage.setItem('authToken', data.accessToken);
+      onLogin(data.user);
 
-    const isValidLogin =
-      credentials.username.trim().toLowerCase() === DEFAULT_USER &&
-      credentials.password === DEFAULT_PASSWORD;
-
-    if (!isValidLogin) {
-      setError('Login ou senha inválidos. Use admin / admin.');
+      if (!lockScreen && onClose) {
+        onClose();
+      }
+    } catch (err) {
+      const message = err?.response?.data?.message || 'Login ou senha inválidos.';
+      setError(Array.isArray(message) ? message.join(', ') : message);
+    } finally {
       setIsLoading(false);
-      return;
     }
+  };
 
-    onLogin({
-      name: 'Administrador',
-      email: 'admin@local',
-      username: DEFAULT_USER,
-    });
 
-    setIsLoading(false);
-    if (!lockScreen && onClose) {
-      onClose();
-    }
 
-    onLogin({
-      name: 'Administrador',
-      email: 'admin@local',
-      username: DEFAULT_USER,
-    });
-
-    setIsLoading(false);
-    if (!lockScreen && onClose) {
-      onClose();
-    }
-
-    onLogin({
-      name: 'Administrador',
-      email: 'admin@local',
-      username: DEFAULT_USER,
-    });
-
-    setIsLoading(false);
-    if (!lockScreen && onClose) {
-      onClose();
-    }
-
-    onLogin({
-      name: 'Administrador',
-      email: 'admin@local',
-      username: DEFAULT_USER,
-    });
-
-    setIsLoading(false);
-    if (!lockScreen && onClose) {
-      onClose();
-      setError('Login ou senha invalidos. Use admin/admin.');
-      setIsLoading(false);
-      return;
-    }
-
-    onLogin({ name: 'Administrador', email: 'admin@local', username: DEFAULT_USER });
-
-    setIsLoading(false);
-    if (!lockScreen && onClose) onClose();
+  const handleRecoverPassword = () => {
+    setRecoveryMessage('Fluxo de recuperação: informe seu e-mail para receber o link de redefinição.');
   };
 
   return (
@@ -107,55 +61,30 @@ const Login = ({ onLogin, onClose, lockScreen = false }) => {
           <div className="form-group">
             <label htmlFor="username">Login</label>
             <div className="input-wrapper">
-              <input
-                id="username"
-                name="username"
-                type="text"
-                value={credentials.username}
-                onChange={handleInputChange}
-                placeholder="Digite seu login"
-                autoComplete="username"
-                required
-              />
+              <input id="username" name="username" type="text" value={credentials.username} onChange={handleInputChange} placeholder="Digite seu login" required />
             </div>
           </div>
 
           <div className="form-group">
             <label htmlFor="password">Senha</label>
             <div className="input-wrapper">
-              <input
-                id="password"
-                name="password"
-                type="password"
-                value={credentials.password}
-                onChange={handleInputChange}
-                placeholder="Digite sua senha"
-                autoComplete="current-password"
-                required
-              />
+              <input id="password" name="password" type="password" value={credentials.password} onChange={handleInputChange} placeholder="Digite sua senha" required />
             </div>
           </div>
 
           {error && <div className="error-message">{error}</div>}
+          {recoveryMessage && <div className="recovery-message">{recoveryMessage}</div>}
 
           <button type="submit" className={`login-submit ${isLoading ? 'loading' : ''}`} disabled={isLoading}>
             {isLoading ? 'Validando...' : 'Entrar no Portal'}
           </button>
+          <button type="button" className="forgot-password" onClick={handleRecoverPassword}>
+            Esqueci minha senha
+          </button>
         </form>
-
-        <div className="login-footer">
-          <div className="credentials-info">
-            <h4>🔑 Credenciais temporárias</h4>
-            <div className="credentials">
-              <p><strong>Login:</strong> admin</p>
-              <p><strong>Senha:</strong> admin</p>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );
 };
 
 export default Login;
-
