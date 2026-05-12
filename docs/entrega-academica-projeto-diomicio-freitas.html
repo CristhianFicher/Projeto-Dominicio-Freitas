@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Entrega Academica - Sistema de Acompanhamento Educacional e Profissional</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 2.5cm 2cm;
+    }
+
+    :root {
+      --text: #1f2933;
+      --muted: #52606d;
+      --line: #d9e2ec;
+      --accent: #1f4e79;
+      --accent-soft: #eef4fb;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background: #f5f7fa;
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.6;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto 24px;
+      padding: 2.5cm 2cm;
+      background: #fff;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    .cover {
+      display: flex;
+      min-height: 297mm;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: center;
+    }
+
+    .cover-top {
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 14px;
+    }
+
+    .cover-title {
+      margin: 80px 0 24px;
+      color: var(--accent);
+      font-size: 30px;
+      line-height: 1.25;
+      text-transform: uppercase;
+    }
+
+    .cover-subtitle {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .cover-meta {
+      margin-top: 60px;
+      text-align: left;
+      font-size: 16px;
+    }
+
+    .cover-meta p {
+      margin: 8px 0;
+    }
+
+    h1, h2, h3 {
+      color: var(--accent);
+      line-height: 1.3;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-top: 0;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin-top: 28px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h3 {
+      font-size: 18px;
+      margin-top: 20px;
+    }
+
+    p {
+      margin: 12px 0;
+      text-align: justify;
+    }
+
+    ul, ol {
+      margin: 10px 0 16px 22px;
+    }
+
+    li + li {
+      margin-top: 4px;
+    }
+
+    .toc {
+      padding: 18px 22px;
+      background: var(--accent-soft);
+      border: 1px solid var(--line);
+    }
+
+    .toc ol {
+      margin: 0 0 0 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 18px 0;
+      font-size: 15px;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--accent-soft);
+      text-align: left;
+    }
+
+    .note {
+      padding: 14px 16px;
+      background: #f8fafc;
+      border-left: 4px solid var(--accent);
+      color: var(--muted);
+    }
+
+    .page-break {
+      break-before: page;
+      page-break-before: always;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .page {
+        width: auto;
+        min-height: auto;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="page cover">
+    <div class="cover-top">
+      <p>ESUCRI</p>
+      <p>Curso: Sistemas de Informacao</p>
+      <p>Disciplina: Projeto de Extensao IV</p>
+    </div>
+
+    <div>
+      <h1 class="cover-title">Sistema de Acompanhamento Educacional e Profissional</h1>
+      <p class="cover-subtitle">Instituto de Educacao Especial Diomicio Freitas</p>
+    </div>
+
+    <div class="cover-meta">
+      <p><strong>Academicos:</strong> Cristhian Quoghi, Ghustavo Cardoso e Isaque Oliveira</p>
+      <p><strong>Professor:</strong> Jucemar</p>
+      <p><strong>Polo / Cidade:</strong> Criciuma</p>
+      <p><strong>Data:</strong> 30/03/2026</p>
+    </div>
+  </section>
+
+  <section class="page page-break">
+    <h1>Resumo</h1>
+    <p>Este documento apresenta o projeto de desenvolvimento de um sistema web voltado ao acompanhamento educacional e profissional de estudantes atendidos pelo Instituto de Educacao Especial Diomicio Freitas. A aplicacao foi estruturada para centralizar o cadastro de estudantes, empresas e funcionarios, alem de permitir o registro de avaliacoes de experiencia e a criacao de vinculos entre estudantes e empresas parceiras. O sistema utiliza frontend em React com Vite, backend em NestJS e persistencia de dados em PostgreSQL, oferecendo integracao completa entre interface, API e banco de dados.</p>
+    <p><strong>Palavras-chave:</strong> inclusao, acompanhamento educacional, avaliacao, sistema web, empregabilidade.</p>
+
+    <h1>Sumario</h1>
+    <div class="toc">
+      <ol>
+        <li>Introducao</li>
+        <li>Objetivos</li>
+        <li>Justificativa</li>
+        <li>Escopo do Projeto</li>
+        <li>Arquitetura e Tecnologias</li>
+        <li>Descricao dos Modulos</li>
+        <li>Telas do Sistema</li>
+        <li>Modelo de Dados e Relacionamentos</li>
+        <li>Endpoints da API</li>
+        <li>Fluxo de Utilizacao</li>
+        <li>Requisitos Funcionais</li>
+        <li>Requisitos Nao Funcionais</li>
+        <li>Cronograma Resumido e Status</li>
+        <li>Validacao e Testes</li>
+        <li>Consideracoes Finais</li>
+      </ol>
+    </div>
+
+    <h2>1. Introducao</h2>
+    <p>O uso da tecnologia como apoio a processos de inclusao educacional e profissional contribui para maior organizacao institucional, melhor rastreabilidade das informacoes e mais seguranca na tomada de decisao. Dentro desse contexto, o presente projeto foi desenvolvido com o objetivo de oferecer uma plataforma capaz de registrar e acompanhar dados relevantes sobre estudantes, empresas parceiras, equipe de apoio e avaliacoes de desempenho.</p>
+    <p>O sistema foi pensado para atender a uma rotina administrativa e pedagogica, possibilitando o cadastro estruturado dos estudantes, o acompanhamento de evolucao por meio de avaliacoes e a vinculacao dos alunos a oportunidades de encaminhamento, estagio, emprego e acompanhamento junto a empresas parceiras.</p>
+
+    <h2>2. Objetivos</h2>
+    <h3>2.1 Objetivo Geral</h3>
+    <p>Desenvolver um sistema web integrado com banco de dados para apoiar o acompanhamento educacional e profissional dos estudantes atendidos pelo Instituto de Educacao Especial Diomicio Freitas.</p>
+    <h3>2.2 Objetivos Especificos</h3>
+    <ul>
+      <li>cadastrar estudantes com informacoes pessoais, familiares, educacionais e profissionais;</li>
+      <li>cadastrar empresas parceiras com dados institucionais e de contato;</li>
+      <li>cadastrar funcionarios responsaveis pelo apoio e acompanhamento;</li>
+      <li>registrar avaliacoes de experiencia com perguntas estruturadas;</li>
+      <li>vincular estudantes a empresas por meio de relacionamentos;</li>
+      <li>disponibilizar consultas, edicoes e remocoes de dados por interface web;</li>
+      <li>integrar frontend, backend e banco de dados em uma unica solucao.</li>
+    </ul>
+
+    <h2>3. Justificativa</h2>
+    <p>Instituicoes que trabalham com inclusao social e profissional necessitam manter registros organizados, confiaveis e de facil consulta. Quando essas informacoes ficam dispersas em arquivos avulsos ou processos manuais, o acompanhamento se torna mais lento, sujeito a erros e dificil de auditar.</p>
+    <p>Este projeto busca resolver esse problema por meio de um sistema centralizado, no qual os dados principais ficam registrados em banco, expostos por API REST e consumidos por uma interface administrativa unica. Dessa forma, o acompanhamento do estudante se torna mais consistente, e a instituicao ganha mais controle sobre seu fluxo de cadastro, avaliacao e relacionamento com empresas.</p>
+
+    <h2>4. Escopo do Projeto</h2>
+    <ul>
+      <li>dashboard com indicadores do sistema;</li>
+      <li>autenticacao local para acesso administrativo;</li>
+      <li>modulo de estudantes;</li>
+      <li>modulo de empresas;</li>
+      <li>modulo de funcionarios;</li>
+      <li>modulo de avaliacoes de experiencia;</li>
+      <li>modulo de relacionamentos entre estudantes e empresas.</li>
+    </ul>
+    <div class="note">Nao fazem parte do escopo atual o controle avancado de usuarios, autenticacao real com token, relatorios automaticos em PDF e integracoes com sistemas externos.</div>
+  </section>
+
+  <section class="page page-break">
+    <h2>5. Arquitetura e Tecnologias</h2>
+    <h3>5.1 Frontend</h3>
+    <ul>
+      <li>React</li>
+      <li>Vite</li>
+      <li>Redux Toolkit</li>
+      <li>React Router</li>
+      <li>Axios</li>
+    </ul>
+
+    <h3>5.2 Backend</h3>
+    <ul>
+      <li>NestJS</li>
+      <li>TypeORM</li>
+      <li>PostgreSQL</li>
+    </ul>
+
+    <h3>5.3 Testes</h3>
+    <ul>
+      <li>Vitest no frontend</li>
+      <li>Node test runner no backend</li>
+    </ul>
+
+    <h3>5.4 Integracao</h3>
+    <p>O frontend consome a API por meio da base <code>http://localhost:3001/api</code>, permitindo comunicacao com os modulos de estudantes, empresas, funcionarios, avaliacoes e relacionamentos.</p>
+
+    <h2>6. Descricao dos Modulos</h2>
+    <h3>6.1 Dashboard</h3>
+    <p>Apresenta uma visao consolidada do sistema com indicadores de estudantes, empresas, funcionarios e avaliacoes, alem de atalhos para os principais fluxos operacionais.</p>
+
+    <h3>6.2 Modulo de Estudantes</h3>
+    <p>Permite cadastrar, listar, editar e remover estudantes. O formulario contempla dados pessoais, endereco, responsavel, grau do espectro, interesses, habilidades e objetivos educacionais e profissionais.</p>
+
+    <h3>6.3 Modulo de Empresas</h3>
+    <p>Permite cadastrar e gerenciar empresas parceiras com dados como razao social, nome fantasia, CNPJ, contato de RH, area de atuacao, porte e observacoes.</p>
+
+    <h3>6.4 Modulo de Funcionarios</h3>
+    <p>Permite cadastrar e gerenciar os funcionarios envolvidos no processo de apoio e acompanhamento institucional.</p>
+
+    <h3>6.5 Modulo de Avaliacoes</h3>
+    <p>Foi adaptado para atender ao formato solicitado na atividade academica. Cada avaliacao possui os campos <code>pessoa_id</code>, <code>data_avaliacao</code>, <code>tipo</code>, <code>professor_responsavel</code> e as perguntas <code>q01</code> a <code>q46</code>. O sistema permite registrar uma avaliacao inicial e uma avaliacao de acompanhamento por estudante, com bloqueio de duplicidade por tipo.</p>
+
+    <h3>6.6 Modulo de Relacionamentos</h3>
+    <p>Permite criar vinculos entre estudantes e empresas, definindo tipo de relacao, status e observacoes. Esse modulo organiza o acompanhamento de encaminhamentos e oportunidades.</p>
+
+    <h2>7. Telas do Sistema</h2>
+    <ul>
+      <li>tela de login para acesso administrativo;</li>
+      <li>dashboard com indicadores e acoes rapidas;</li>
+      <li>lista de estudantes com busca, avaliacao, edicao e remocao;</li>
+      <li>cadastro e edicao de estudantes;</li>
+      <li>lista de empresas com busca, edicao e remocao;</li>
+      <li>cadastro e edicao de empresas;</li>
+      <li>lista de funcionarios com busca, edicao e remocao;</li>
+      <li>cadastro e edicao de funcionarios;</li>
+      <li>lista centralizada de Avaliacao 1 e Avaliacao 2;</li>
+      <li>formulario de avaliacao com 46 perguntas;</li>
+      <li>tela de relacionamentos entre estudante e empresa.</li>
+    </ul>
+  </section>
+
+  <section class="page page-break">
+    <h2>8. Modelo de Dados e Relacionamentos</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Entidade</th>
+          <th>Identificador</th>
+          <th>Finalidade</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>estudantes</td>
+          <td>UUID</td>
+          <td>cadastro dos alunos</td>
+        </tr>
+        <tr>
+          <td>empresas</td>
+          <td>UUID</td>
+          <td>cadastro das empresas parceiras</td>
+        </tr>
+        <tr>
+          <td>funcionarios</td>
+          <td>UUID</td>
+          <td>cadastro da equipe de apoio</td>
+        </tr>
+        <tr>
+          <td>avaliacoes</td>
+          <td>SERIAL</td>
+          <td>registro das avaliacoes de experiencia</td>
+        </tr>
+        <tr>
+          <td>relacionamentos</td>
+          <td>UUID</td>
+          <td>vinculo entre estudante e empresa</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Principais relacionamentos do sistema:</p>
+    <ul>
+      <li>um estudante pode possuir varias avaliacoes;</li>
+      <li>um estudante pode possuir varios relacionamentos com empresas;</li>
+      <li>uma empresa pode possuir varios estudantes vinculados;</li>
+      <li>cada relacionamento referencia exatamente um estudante e uma empresa;</li>
+      <li>cada avaliacao referencia um estudante por meio do campo <code>pessoa_id</code>.</li>
+    </ul>
+
+    <div class="note">No projeto atual, <code>pessoa_id</code> referencia o estudante existente via UUID, mantendo compatibilidade com a base ja estruturada do sistema.</div>
+
+    <h2>9. Endpoints da API</h2>
+    <h3>9.1 Estudantes</h3>
+    <ul>
+      <li><code>GET /api/estudantes</code></li>
+      <li><code>GET /api/estudantes/:id</code></li>
+      <li><code>POST /api/estudantes</code></li>
+      <li><code>PUT /api/estudantes/:id</code></li>
+      <li><code>DELETE /api/estudantes/:id</code></li>
+    </ul>
+
+    <h3>9.2 Empresas</h3>
+    <ul>
+      <li><code>GET /api/empresas</code></li>
+      <li><code>GET /api/empresas/:id</code></li>
+      <li><code>POST /api/empresas</code></li>
+      <li><code>PUT /api/empresas/:id</code></li>
+      <li><code>DELETE /api/empresas/:id</code></li>
+    </ul>
+
+    <h3>9.3 Funcionarios</h3>
+    <ul>
+      <li><code>GET /api/funcionarios</code></li>
+      <li><code>GET /api/funcionarios/:id</code></li>
+      <li><code>POST /api/funcionarios</code></li>
+      <li><code>PUT /api/funcionarios/:id</code></li>
+      <li><code>DELETE /api/funcionarios/:id</code></li>
+    </ul>
+
+    <h3>9.4 Avaliacoes</h3>
+    <ul>
+      <li><code>GET /api/avaliacoes</code></li>
+      <li><code>GET /api/avaliacoes?pessoa_id=&lt;uuid&gt;</code></li>
+      <li><code>GET /api/avaliacoes/:id</code></li>
+      <li><code>POST /api/avaliacoes</code></li>
+      <li><code>PUT /api/avaliacoes/:id</code></li>
+      <li><code>DELETE /api/avaliacoes/:id</code></li>
+    </ul>
+
+    <h3>9.5 Relacionamentos</h3>
+    <ul>
+      <li><code>GET /api/relacionamentos</code></li>
+      <li><code>GET /api/relacionamentos/:id</code></li>
+      <li><code>POST /api/relacionamentos</code></li>
+      <li><code>PUT /api/relacionamentos/:id</code></li>
+      <li><code>DELETE /api/relacionamentos/:id</code></li>
+    </ul>
+  </section>
+
+  <section class="page page-break">
+    <h2>10. Fluxo de Utilizacao</h2>
+    <ol>
+      <li>realizar login administrativo;</li>
+      <li>cadastrar estudantes;</li>
+      <li>cadastrar empresas;</li>
+      <li>cadastrar funcionarios;</li>
+      <li>criar relacionamentos entre estudantes e empresas;</li>
+      <li>registrar a Avaliacao 1;</li>
+      <li>registrar a Avaliacao 2;</li>
+      <li>acompanhar os indicadores no dashboard.</li>
+    </ol>
+
+    <h2>11. Requisitos Funcionais</h2>
+    <ul>
+      <li>permitir acesso administrativo ao sistema;</li>
+      <li>cadastrar, listar, editar e remover estudantes;</li>
+      <li>cadastrar, listar, editar e remover empresas;</li>
+      <li>cadastrar, listar, editar e remover funcionarios;</li>
+      <li>listar avaliacoes por estudante;</li>
+      <li>cadastrar avaliacao inicial;</li>
+      <li>cadastrar avaliacao de acompanhamento;</li>
+      <li>consultar detalhe de avaliacao;</li>
+      <li>filtrar avaliacoes por <code>pessoa_id</code>;</li>
+      <li>cadastrar e remover relacionamentos;</li>
+      <li>exibir indicadores no dashboard.</li>
+    </ul>
+
+    <h2>12. Requisitos Nao Funcionais</h2>
+    <ul>
+      <li>interface responsiva;</li>
+      <li>persistencia em PostgreSQL;</li>
+      <li>API REST estruturada;</li>
+      <li>separacao entre frontend e backend;</li>
+      <li>validacao de dados;</li>
+      <li>integracao com Redux Toolkit e Axios;</li>
+      <li>testes automatizados;</li>
+      <li>organizacao modular de codigo.</li>
+    </ul>
+
+    <h2>13. Cronograma Resumido e Status</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Etapa</th>
+          <th>Situacao</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>levantamento dos modulos principais</td>
+          <td>concluido</td>
+        </tr>
+        <tr>
+          <td>estruturacao do backend</td>
+          <td>concluido</td>
+        </tr>
+        <tr>
+          <td>estruturacao do frontend</td>
+          <td>concluido</td>
+        </tr>
+        <tr>
+          <td>integracao com API real</td>
+          <td>concluido</td>
+        </tr>
+        <tr>
+          <td>adaptacao do modulo de avaliacoes</td>
+          <td>concluido</td>
+        </tr>
+        <tr>
+          <td>atualizacao da documentacao</td>
+          <td>concluido</td>
+        </tr>
+        <tr>
+          <td>testes automatizados</td>
+          <td>concluido</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>14. Validacao e Testes</h2>
+    <p>O projeto foi validado tecnicamente por meio de build do frontend, build do backend, testes automatizados no frontend, testes automatizados no backend, chamadas reais para os endpoints principais e validacao real do fluxo de avaliacoes com listagem, filtro, detalhe e cadastro.</p>
+    <p>Os testes cobrem pontos relevantes como comportamento da tela de avaliacao, envio de edicao de estudante, comportamento de servicos de estudantes, comportamento de servicos de avaliacoes e comportamento de servicos de relacionamentos.</p>
+
+    <h2>15. Consideracoes Finais</h2>
+    <p>O sistema desenvolvido atende ao objetivo de centralizar o acompanhamento educacional e profissional dos estudantes do Instituto de Educacao Especial Diomicio Freitas. A aplicacao oferece uma base funcional consistente, com interface integrada a uma API real, banco de dados persistente e estrutura modular adequada para evolucoes futuras.</p>
+    <p>Como continuidade, o projeto pode receber melhorias como autenticacao completa, perfis de permissao, emissao de relatorios e testes end-to-end. Ainda assim, no estado atual, a solucao ja entrega os principais fluxos necessarios para cadastro, avaliacao e acompanhamento institucional.</p>
+  </section>
+</body>
+</html>

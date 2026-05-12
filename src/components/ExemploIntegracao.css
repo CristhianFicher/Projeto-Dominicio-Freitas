@@ -1,0 +1,92 @@
+.exemplo-integracao {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.exemplo-integracao h2 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+  text-align: center;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #3498db;
+}
+
+.secao-formulario, .secao-lista, .explicacao {
+  margin-bottom: 30px;
+  padding: 20px;
+  border-radius: 6px;
+  background-color: #f8f9fa;
+}
+
+.secao-formulario h3, .secao-lista h3, .explicacao h3 {
+  color: #3498db;
+  margin-bottom: 15px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.input-error {
+  border-color: #e74c3c !important;
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.success-message {
+  color: #27ae60;
+  background-color: #d4edda;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 15px;
+}
+
+button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+.explicacao ul {
+  padding-left: 20px;
+}
+
+.explicacao li {
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.explicacao strong {
+  color: #3498db;
+}

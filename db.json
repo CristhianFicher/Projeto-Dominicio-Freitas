@@ -1,0 +1,49 @@
+{
+  "estudantes": [
+    {
+      "id": "4bf6",
+      "nome": "Cristhian Quoghi Ficher",
+      "email": "Cristhianquoghi@hotmail.com",
+      "cpf": "08340379984"
+    },
+    {
+      "id": "7e65",
+      "nome": "Cristhian Quoghi Ficher",
+      "email": "Cristhianquoghi@hotmail.com",
+      "cpf": "08340379984"
+    },
+    {
+      "id": "109a",
+      "nome": "Teste",
+      "email": "teste@gmail.com",
+      "cpf": "22222222222"
+    },
+    {
+      "id": "0a0a",
+      "nome": "Teste Axios",
+      "email": "Axios@oul.com.br",
+      "cpf": "22222222222"
+    }
+  ],
+  "empresas": [],
+  "funcionarios": [
+    {
+      "id": "dffa",
+      "nome": "Teste axiox",
+      "cpf": "99999999999",
+      "telefone": "48999999999",
+      "email": "testeaxios@hotmail.com",
+      "endereco": "teste",
+      "dataNascimento": "2003-05-21",
+      "dataAdmissao": "2025-11-01",
+      "funcao": "teste",
+      "departamento": "rh",
+      "salario": 10000,
+      "nivelEscolaridade": "mestrado",
+      "experiencia": "",
+      "observacoes": ""
+    }
+  ],
+  "avaliacoes": [],
+  "relacionamentos": []
+}

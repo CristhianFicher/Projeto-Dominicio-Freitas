@@ -1,0 +1,83 @@
+import { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Header from './components/Header';
+import Login from './components/Login';
+import Dashboard from './components/Dashboard';
+import Home from './components/Home';
+import SplashScreen from './components/SplashScreen';
+import ListaEstudantes from './components/ListaEstudantes';
+import ListaAvaliacoes from './components/ListaAvaliacoes';
+import ListaEmpresas from './components/ListaEmpresas';
+import ListaFuncionarios from './components/ListaFuncionarios';
+import EditarEstudante from './components/EditarEstudante';
+import EditarEmpresa from './components/EditarEmpresa';
+import EditarFuncionario from './components/EditarFuncionario';
+import CadastroAlunos from './CadastroAlunos/cadastroAlunos';
+import CadastroEmpresas from './CadastroEmpresas/cadastroEmpresas';
+import AvaliacaoExperiencia from './AvaliacaoDesempenho/avaliacao';
+import CadastroFuncionario from './CadastroFuncionario/cadastroFuncionarios';
+import ExemploIntegracao from './components/ExemploIntegracao';
+import RelacionarEstudanteEmpresa from './components/RelacionarEstudanteEmpresa';
+
+function App() {
+  const [user, setUser] = useState(null);
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowSplash(false), 1400);
+    const token = localStorage.getItem('authToken');
+
+    if (token) {
+      setUser({ name: 'Administrador', email: 'admin@local', username: 'admin' });
+    }
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleLogin = (userData) => {
+    setUser(userData);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    setUser(null);
+  };
+
+  if (showSplash) {
+    return <SplashScreen />;
+  }
+
+  return (
+    <Router>
+      {!user ? (
+        <Login onLogin={handleLogin} lockScreen />
+      ) : (
+        <div className="app">
+          <Header user={user} onLogout={handleLogout} />
+          <main className="main-content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/cadastroAlunos" element={<ListaEstudantes />} />
+              <Route path="/novo-estudante" element={<CadastroAlunos />} />
+              <Route path="/editar-estudante/:id" element={<EditarEstudante />} />
+              <Route path="/avaliacoes" element={<ListaAvaliacoes />} />
+              <Route path="/empresas" element={<ListaEmpresas />} />
+              <Route path="/nova-empresa" element={<CadastroEmpresas />} />
+              <Route path="/editar-empresa/:id" element={<EditarEmpresa />} />
+              <Route path="/funcionarios" element={<ListaFuncionarios />} />
+              <Route path="/novo-funcionario" element={<CadastroFuncionario />} />
+              <Route path="/editar-funcionario/:id" element={<EditarFuncionario />} />
+              <Route path="/avaliacao" element={<AvaliacaoExperiencia />} />
+              <Route path="/relacionamentos" element={<RelacionarEstudanteEmpresa />} />
+              <Route path="/exemplo-integracao" element={<ExemploIntegracao />} />
+              <Route path="/cadastroFuncionarios" element={<CadastroFuncionario />} />
+            </Routes>
+          </main>
+        </div>
+      )}
+    </Router>
+  );
+}
+
+export default App;
