@@ -14,7 +14,7 @@ const Dashboard = () => {
         setLoading(true);
         const response = await api.get('/dashboard');
         setOverview(response.data);
-      } catch (err) {
+      } catch {
         setError('Não foi possível carregar o dashboard agora.');
       } finally {
         setLoading(false);
@@ -24,16 +24,14 @@ const Dashboard = () => {
     loadOverview();
   }, []);
 
-  const resumo = overview?.resumo || {};
-
-  const statCards = useMemo(() => ([
-    { title: 'Estudantes', value: resumo.estudantes || 0, color: 'blue', hint: 'Pessoas acompanhadas' },
-    { title: 'Empresas', value: resumo.empresas || 0, color: 'green', hint: 'Parceiras ativas' },
-    { title: 'Avaliações', value: resumo.avaliacoes || 0, color: 'orange', hint: 'Registros aplicados' },
-    { title: 'Fichas', value: resumo.fichasAcompanhamento || 0, color: 'purple', hint: 'Acompanhamentos ativos' },
-    { title: 'Enc. Ativos', value: resumo.encaminhamentosAtivos || 0, color: 'teal', hint: 'Em andamento' },
-    { title: 'Enc. Desligados', value: resumo.encaminhamentosDesligados || 0, color: 'red', hint: 'Ciclos encerrados' },
-  ]), [resumo]);
+    const statCards = useMemo(() => ([
+    { title: 'Estudantes', value: overview?.resumo?.estudantes || 0, color: 'blue', hint: 'Pessoas acompanhadas' },
+    { title: 'Empresas', value: overview?.resumo?.empresas || 0, color: 'green', hint: 'Parceiras ativas' },
+    { title: 'Avaliações', value: overview?.resumo?.avaliacoes || 0, color: 'orange', hint: 'Registros aplicados' },
+    { title: 'Fichas', value: overview?.resumo?.fichasAcompanhamento || 0, color: 'purple', hint: 'Acompanhamentos ativos' },
+    { title: 'Enc. Ativos', value: overview?.resumo?.encaminhamentosAtivos || 0, color: 'teal', hint: 'Em andamento' },
+    { title: 'Enc. Desligados', value: overview?.resumo?.encaminhamentosDesligados || 0, color: 'red', hint: 'Ciclos encerrados' },
+  ]), [overview]);
 
   const quickActions = [
     { title: 'Nova ficha', link: '/relacionamentos', icon: 'FC' },
@@ -124,3 +122,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
