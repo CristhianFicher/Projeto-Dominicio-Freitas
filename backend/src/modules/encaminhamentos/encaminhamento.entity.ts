@@ -35,16 +35,16 @@ export class Encaminhamento {
   @Column({ type: 'date', nullable: true })
   dataAdmissao?: string | null;
 
-  @Column({ length: 100, nullable: true })
+  @Column({ type: 'varchar', length: 100, nullable: true })
   funcao?: string | null;
 
-  @Column({ length: 100, nullable: true })
+  @Column({ type: 'varchar', length: 100, nullable: true })
   contatoRh?: string | null;
 
   @Column({ type: 'date', nullable: true })
   dataProvavelDesligamento?: string | null;
 
-  @Column({ length: 20, default: 'ativo' })
+  @Column({ type: 'varchar', length: 20, default: 'ativo' })
   status: string;
 
   @Column({ type: 'text', nullable: true })
