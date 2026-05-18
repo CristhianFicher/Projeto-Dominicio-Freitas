@@ -25,7 +25,7 @@ npm install
 npm run dev
 ```
 
-O frontend usa a API definida em `src/services/api.js`, atualmente com `baseURL` em `http://localhost:3001/api`.
+O frontend usa a API definida em `src/services/api.js`, com `VITE_API_URL` opcional e fallback para `http://localhost:3001/api`.
 
 ### 2. Backend
 
@@ -44,6 +44,33 @@ Variaveis esperadas no `.env`:
 PORT=3001
 DATABASE_URL=postgres://postgres:postgres@localhost:5433/ong_db
 ```
+
+### 3. Modo apresentacao sem backend
+
+Se voce precisar apresentar o sistema sem Docker, sem PostgreSQL e sem API NestJS, rode o frontend em modo demo:
+
+```bash
+npm install
+echo "VITE_DEMO_API=true" > .env.local
+npm run dev
+```
+
+Nesse modo, o frontend grava os dados de demonstracao no `localStorage` do navegador e aceita as credenciais:
+
+```text
+login: admin
+senha: admin
+```
+
+O modo demo tambem permite cadastrar, editar e remover estudantes, empresas, funcionarios, avaliacoes e relacionamentos durante a apresentacao. Para limpar os dados demo, apague o `localStorage` do navegador ou execute no console:
+
+```js
+localStorage.removeItem('demoApiData');
+localStorage.removeItem('authToken');
+location.reload();
+```
+
+Para voltar a usar a API real, remova o arquivo `.env.local` ou apague a variavel `VITE_DEMO_API`.
 
 ## Validacoes executadas
 
