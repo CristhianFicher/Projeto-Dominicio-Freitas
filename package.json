@@ -4,13 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "npm run lint && vite",
+    "dev": "vite --host 0.0.0.0",
     "build": "vite build",
-    "lint": "eslint .",
+    "lint": "node scripts/run-eslint.cjs .",
     "test": "vitest run",
     "test:watch": "vitest",
     "preview": "vite preview",
-    "server": "json-server --watch db.json --port 3002"
+    "server": "json-server --watch db.json --port 3002",
+    "dev:checked": "npm run lint && npm run dev"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.9.2",
