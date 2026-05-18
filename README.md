@@ -25,6 +25,8 @@ npm install
 npm run dev
 ```
 
+Se quiser executar o lint antes de subir o Vite, use `npm run dev:checked`.
+
 O frontend usa a API definida em `src/services/api.js`, com `VITE_API_URL` opcional e fallback para `http://localhost:3001/api`.
 
 ### 2. Backend
@@ -54,6 +56,8 @@ npm install
 echo "VITE_DEMO_API=true" > .env.local
 npm run dev
 ```
+
+Nesse modo, o `npm run dev` sobe direto o Vite para evitar que uma falha de lint bloqueie a apresentacao. Se quiser validar o codigo tambem, rode `npm run lint` separadamente.
 
 Nesse modo, o frontend grava os dados de demonstracao no `localStorage` do navegador e aceita as credenciais:
 
