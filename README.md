@@ -20,6 +20,7 @@ Aplicacao full stack para cadastro e acompanhamento de estudantes, empresas, fun
 ## Documentação
 
 - [Manual do Usuário](docs/MANUAL_USUARIO.md): guia de uso do sistema com instruções sobre login, cadastros, avaliações, encaminhamentos, dashboard e FAQ.
+- [Documentação Técnica](docs/DOCUMENTACAO_TECNICA.md): arquitetura, tecnologias, banco de dados, endpoints, instalação e variáveis de ambiente.
 
 ## Como rodar
 
