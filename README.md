@@ -16,6 +16,11 @@ Aplicacao full stack para cadastro e acompanhamento de estudantes, empresas, fun
 - Backend: NestJS, TypeORM, PostgreSQL
 - Testes: Vitest no frontend e Node test runner no backend
 
+
+## Documentação
+
+- [Manual do Usuário](docs/MANUAL_USUARIO.md): guia de uso do sistema com instruções sobre login, cadastros, avaliações, encaminhamentos, dashboard e FAQ.
+
 ## Como rodar
 
 ### 1. Frontend
